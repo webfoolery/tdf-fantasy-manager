@@ -68,6 +68,61 @@ img.logo {
   align-self: center;
 }
 
+.infoWrapper {
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.hideInfo .infoWrapper {
+  display:none;
+}
+
+#infoBtn {
+  width:50px;
+  height:50px;
+  position:absolute;
+  top:10px;
+  right:10px;
+  background-color: #fff;
+  color:#000;
+  cursor:pointer;
+  display: inline-block; /* Or use flexbox for centering */
+  text-align: center; /* For horizontal alignment */
+  line-height: 50px;
+  font-size: 3rem;
+  border-radius: 50%;
+  font-family:'Times New Roman', Times, serif;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.iLogo {
+  padding:5px;
+  width:20px;
+  height:20px;
+  line-height: 20px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  background:#fff;
+  color:#000;
+  font-family:'Times New Roman', Times, serif;
+  font-style: italic;
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+#closeInfo {
+  padding:10px;
+  background-color: var(--allrounderColor);
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor:pointer;
+}
+
 .costCount,
 .roles {
   display: flex;
@@ -137,6 +192,7 @@ img.logo {
 
 table {
   border-collapse: collapse;
+  border:1px solid #fff;
 }
 
 td {

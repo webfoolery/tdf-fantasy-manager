@@ -12,6 +12,17 @@
 </head>
 
 <body>
+  <!-- <svg id="infoBtn" width="800px" height="800px" viewBox="0 0 416.979 416.979">
+    <g>
+	<path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85
+		c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786
+		c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576
+		c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765
+		c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/>
+</g>
+</svg> -->
+<span id="infoBtn">i</span>
+  <!-- <img src="images/icon-info.svg" alt="Info" id="infoBtn"> -->
   <div class="header">
     <div class="logoWrapper">
       <div>
@@ -20,11 +31,29 @@
       </div>
     </div>
   </div>
+        <div class="infoWrapper">
+          <p>
+            Click on a rider name on either table to add/remove them from your selection.<br />
+            Click a column heading on either table to sort by that column.<br />
+            Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
+          </p>
+          <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes underneath your team selection:</p>
+          <ul>
+            <li>Max spend is 120 credits</li>
+            <li>You need 8 team mates</li>
+            <li>Max 3 leaders</li>
+            <li>Max 3 sprinters</li>
+            <li>Max 3 climbers</li>
+            <li>Max 5 all rounders</li>
+          </ul>
+          <button type="button" id="closeInfo">Close this info panel</button>
+          <p>You can show this info panel at any time by clicking on the <span class="iLogo">i</span> logo at the top of the page.</p>
+        </div>
   <div class="tableWrapper">
     <div class="selectedRidersWrapper">
       <h3 class="tableHeading">Current selection</h3>
-      <p id="noRidersSelected">You have no selected riders.<br />Choose some from the rider list to add them here.</p>
-      <table id="selectedRidersTable" border="2" class="sortable">
+      <p id="noRidersSelected"><b>You have no selected riders yet.</b><br />When you select them they will appear here.<br />Choose some from the rider list to add them here.</p>
+      <table id="selectedRidersTable" class="sortable">
         <thead>
           <!-- <th>#</th> -->
           <!-- <th>ID</th> -->
@@ -45,7 +74,7 @@
           </div>
           <div>
             <h4>Count: <span id="teamCount">0</span>/8</h4>
-            <p class="errorMessage">Need 8 team mates</p>
+            <p class="errorMessage">8 riders needed</p>
           </div>
         </div>
         <div class="roles">
@@ -66,25 +95,11 @@
             <p class="errorMessage">Max 5 all rounders</p>
           </div>
         </div>
-        <p>
-          Click on a rider name on either table to add/remove them from your selection.<br />
-          Click a column heading on either table to sort by that column.<br />
-          Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
-        </p>
-        <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes above:</p>
-        <ul>
-          <li>Max spend is 120 credits</li>
-          <li>You need 8 team mates</li>
-          <li>Max 3 leaders</li>
-          <li>Max 3 sprinters</li>
-          <li>Max 3 climbers</li>
-          <li>Max 5 all rounders</li>
-        </ul>
       </div>
     </div>
     <div class="riderListWrapper">
       <h3 class="tableHeading">Add riders by clicking below</h3>
-      <table id="riderListTable" border="2" class="sortable">
+      <table id="riderListTable" class="sortable">
         <thead>
           <tr>
             <!-- <th>#</th> -->

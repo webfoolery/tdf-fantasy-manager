@@ -215,6 +215,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentTeamAllrounders > 3) allrounderEl.classList.add('error');
     else allrounderEl.classList.remove('error');
   }
+
+  document.getElementById('closeInfo').addEventListener('click', (e) => {
+	document.body.classList.add('hideInfo');
+  });
+
+  document.getElementById('infoBtn').addEventListener('click', (e) => {
+	document.body.classList.remove('hideInfo');
+  });
   
 });
 
