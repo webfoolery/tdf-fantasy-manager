@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TDF Fantasy Data</title>
-  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
   <script src="data.js"></script>
   <script src="tdf.js"></script>
-  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet"/> -->
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
@@ -23,8 +21,8 @@
     </div>
   </div>
   <div class="tableWrapper">
-    <div>
-      <h3 class="tableHeading">Your selection</h3>
+    <div class="selectedRidersWrapper">
+      <h3 class="tableHeading">Current selection</h3>
       <p id="noRidersSelected">You have no selected riders.<br />Choose some from the rider list to add them here.</p>
       <table id="selectedRidersTable" border="2" class="sortable">
         <thead>
@@ -84,8 +82,8 @@
         </ul>
       </div>
     </div>
-    <div>
-      <h3 class="tableHeading">All riders</h3>
+    <div class="riderListWrapper">
+      <h3 class="tableHeading">Add riders by clicking below</h3>
       <table id="riderListTable" border="2" class="sortable">
         <thead>
           <tr>

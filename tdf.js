@@ -6,7 +6,7 @@ Filter for all rider list
 
 */
 const startingTeam = [];
-const abandons = [264, 352];
+const abandons = [264, 352, 14];
 const LOCAL_STORAGE_KEY = 'selectedRiderTeam';
 const rolesMap = {
 	lib_rouleur: 'All rounder',
@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
 			row.appendChild(td);
 		});
     */
+		if (rider.club == 'TotalEnergies') rider.club = 'Total Energies';
+		if (rider.nomcomplet.includes('SINTMAARTENSDIJK')) rider.nomcomplet = rider.nomcomplet.replace('SINTMAARTENSDIJK', 'SINTMRTNSDJK');
 		const cellsData = {
 			// count: count,
 			// id: rider.id,
