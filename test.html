@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimized Rider Data Table</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="data.js"></script>
+    <style>
+        /* Custom styles for highlighting */
+        .highlight {
+            @apply bg-blue-100 border-blue-400; /* Tailwind classes for highlight */
+        }
+        .abandoned {
+            @apply opacity-50 line-through; /* Tailwind classes for abandoned riders */
+        }
+        /* Basic table styling for readability */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0; /* Tailwind border-gray-200 */
+            text-align: left;
+        }
+        th {
+            background-color: #edf2f7; /* Tailwind bg-gray-100 */
+        }
+        .sort-indicator {
+            font-size: 0.8em;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+table tbody tr.abandoned td {text-decoration: line-through;color:#f00;opacity:0.5;}
+tr.abandoned .role {border-left:7px solid red;}
+    </style>
+</head>
+<body class="font-sans bg-gray-100 p-3 flex flex-col items-center min-h-screen">
+
+    <div class="container mx-auto bg-white p-4 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Rider Management Dashboard</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                <h3 class="text-lg font-semibold text-blue-800">Team Cost: <span id="teamCost" class="font-bold">0</span><img src="https://placehold.co/16x16/000000/FFFFFF?text=M" class="inline-block ml-1" alt="Currency"></h3>
+            </div>
+            <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                <h3 class="text-lg font-semibold text-green-800">Team Count: <span id="teamCount" class="font-bold">0</span></h3>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg shadow-sm">
+                <h3 class="text-lg font-semibold text-purple-800">Leaders: <span id="teamLeaders" class="font-bold">0</span> | Climbers: <span id="teamClimbers" class="font-bold">0</span> | Sprinters: <span id="teamSprinters" class="font-bold">0</span> | All-rounders: <span id="teamAllrounders" class="font-bold">0</span></h3>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- All Riders Table -->
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">All Riders</h2>
+                <table id="userdata" class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 0)">#</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 1)">ID</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 2)">Name</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Bib</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 4)">Team</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 5)">Role</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300 cursor-pointer" onclick="sortTable(this, 6)">Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riderTableBody" class="divide-y divide-gray-200">
+                        <!-- Rider data will be loaded here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Selected Riders Table -->
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Selected Team</h2>
+                <table id="selectedRiders" class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">#</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">ID</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Name</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Bib</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Team</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Role</th>
+                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-300">Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody id="selectedRidersBody" class="divide-y divide-gray-200">
+                        <!-- Selected riders will appear here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder for your global data object
+        // In a real application, 'data' would be fetched from an API or defined elsewhere.
+        /*
+        const data = {
+            joueurs: [
+                { id: 112, nomcomplet: 'Alice Smith', position: 'lib_rouleur', imageclub: 'club_a.png', club: 'Team A', valeur: 100 },
+                { id: 153, nomcomplet: 'Bob Johnson', position: 'lib_grimpeur', imageclub: 'club_b.png', club: 'Team B', valeur: 150 },
+                { id: 97, nomcomplet: 'Charlie Brown', position: 'lib_baroudeur', imageclub: 'club_c.png', club: 'Team C', valeur: 120 },
+                { id: 151, nomcomplet: 'David Lee', position: 'lib_leader', imageclub: 'club_d.png', club: 'Team D', valeur: 200 },
+                { id: 113, nomcomplet: 'Eve Davis', position: 'lib_rouleur', imageclub: 'club_a.png', club: 'Team A', valeur: 90 },
+                { id: 177, nomcomplet: 'Frank White', position: 'lib_grimpeur', imageclub: 'club_e.png', club: 'Team E', valeur: 160 },
+                { id: 188, nomcomplet: 'Grace Taylor', position: 'lib_baroudeur', imageclub: 'club_f.png', club: 'Team F', valeur: 110 },
+                { id: 44, nomcomplet: 'Henry Miller', position: 'lib_leader', imageclub: 'club_g.png', club: 'Team G', valeur: 220 },
+                { id: 128, nomcomplet: 'Ivy Wilson', position: 'lib_rouleur', imageclub: 'club_h.png', club: 'Team H', valeur: 80 },
+                { id: 207, nomcomplet: 'Jack Moore', position: 'lib_grimpeur', imageclub: 'club_i.png', club: 'Team I', valeur: 130 },
+                { id: 88, nomcomplet: 'Karen Hall', position: 'lib_baroudeur', imageclub: 'club_j.png', club: 'Team J', valeur: 105 },
+                { id: 18, nomcomplet: 'Liam King', position: 'lib_leader', imageclub: 'club_k.png', club: 'Team K', valeur: 190 },
+                { id: 71, nomcomplet: 'Mia Green', position: 'lib_rouleur', imageclub: 'club_l.png', club: 'Team L', valeur: 95 },
+                { id: 146, nomcomplet: 'Noah Baker', position: 'lib_grimpeur', imageclub: 'club_m.png', club: 'Team M', valeur: 145 },
+                { id: 7, nomcomplet: 'Olivia Adams', position: 'lib_baroudeur', imageclub: 'club_n.png', club: 'Team N', valeur: 115 },
+                { id: 78, nomcomplet: 'Peter Scott', position: 'lib_leader', imageclub: 'club_o.png', club: 'Team O', valeur: 210 },
+                { id: 86, nomcomplet: 'Quinn Wright', position: 'lib_rouleur', imageclub: 'club_p.png', club: 'Team P', valeur: 85 },
+                { id: 143, nomcomplet: 'Rachel Hill', position: 'lib_grimpeur', imageclub: 'club_q.png', club: 'Team Q', valeur: 155 },
+                { id: 17, nomcomplet: 'Sam Turner', position: 'lib_baroudeur', imageclub: 'club_r.png', club: 'Team R', valeur: 125 },
+                { id: 147, nomcomplet: 'Tina Cooper', position: 'lib_leader', imageclub: 'club_s.png', club: 'Team S', valeur: 205 },
+                { id: 51, nomcomplet: 'Uma Clark', position: 'lib_rouleur', imageclub: 'club_t.png', club: 'Team T', valeur: 100 },
+            ]
+        };
+*/
+        // Utility function to get an object by ID from an array
+        function getObjectById(arr, id) {
+            // Ensure ID is a number for strict comparison
+            const searchId = typeof id === 'string' ? parseInt(id, 10) : id;
+            return arr.find(obj => obj.id === searchId);
+        }
+
+        // Global state for team stats
+        let currentTeamCost = 0;
+        let currentTeamCount = 0;
+        let currentTeamLeaders = 0;
+        let currentTeamSprinters = 0;
+        let currentTeamClimbers = 0;
+        let currentTeamAllrounders = 0;
+
+        // Map for roles for better readability
+        const rolesMap = {
+            lib_rouleur: 'All rounder',
+            lib_grimpeur: 'Climber',
+            lib_baroudeur: 'Sprinter',
+            lib_leader: 'Leader',
+            abandoned: 'Abandoned',
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Convert arrays to Sets for O(1) average time complexity lookups
+            const abandonsSet = new Set([352, 264]);
+            const initialTeamSet = new Set([233, 89, 365, 75, 181, 114, 327, 397]); // Your initial team IDs
+
+            // Get DOM elements once
+            const riderTableBody = document.getElementById('riderTableBody');
+            const selectedRidersBody = document.getElementById('selectedRidersBody');
+
+            const teamCostEl = document.getElementById('teamCost');
+            const teamCountEl = document.getElementById('teamCount');
+            const teamLeadersEl = document.getElementById('teamLeaders');
+            const teamSprintersEl = document.getElementById('teamSprinters');
+            const teamClimbersEl = document.getElementById('teamClimbers');
+            const teamAllroundersEl = document.getElementById('teamAllrounders');
+
+            /**
+             * Updates the displayed team statistics in the DOM.
+             */
+            function updateTeamStatsDisplay() {
+                teamCostEl.innerText = currentTeamCost;
+                teamCountEl.innerText = currentTeamCount;
+                teamLeadersEl.innerText = currentTeamLeaders;
+                teamSprintersEl.innerText = currentTeamSprinters;
+                teamClimbersEl.innerText = currentTeamClimbers;
+                teamAllroundersEl.innerText = currentTeamAllrounders;
+            }
+
+            /**
+             * Adds a rider to the selected team table and updates stats.
+             * @param {HTMLElement} originalRow - The <tr> element from the main table.
+             */
+            function addSelected(originalRow) {
+                const riderId = parseInt(originalRow.id.replace('rider', ''), 10);
+                const rider = getObjectById(data.joueurs, riderId);
+
+                if (!rider) {
+                    console.warn(`Rider with ID ${riderId} not found in data.`);
+                    return;
+                }
+
+                // Add highlight to the original row
+                originalRow.classList.add('highlight');
+
+                // Clone the row for the selected table
+                const clonedRow = originalRow.cloneNode(true);
+                clonedRow.classList.remove('highlight'); // Remove highlight from the cloned row
+                clonedRow.id = `selected${rider.id}`; // Assign a unique ID for the selected table
+
+                // Add click listener to the cloned row (for removal)
+                clonedRow.addEventListener("click", (event) => {
+                    // Find the original row using its ID and remove selection
+                    const originalRiderRow = document.getElementById(`rider${rider.id}`);
+                    if (originalRiderRow) {
+                        removeSelected(originalRiderRow);
+                    }
+                });
+
+                selectedRidersBody.appendChild(clonedRow);
+
+                // Update stats
+                currentTeamCost += Number(rider.valeur);
+                currentTeamCount++;
+                if (rolesMap[rider.position] === 'All rounder') currentTeamAllrounders++;
+                else if (rolesMap[rider.position] === 'Climber') currentTeamClimbers++;
+                else if (rolesMap[rider.position] === 'Sprinter') currentTeamSprinters++;
+                else if (rolesMap[rider.position] === 'Leader') currentTeamLeaders++;
+
+                updateTeamStatsDisplay();
+            }
+
+            /**
+             * Removes a rider from the selected team table and updates stats.
+             * @param {HTMLElement} originalRow - The <tr> element from the main table.
+             */
+            function removeSelected(originalRow) {
+                const riderId = parseInt(originalRow.id.replace('rider', ''), 10);
+                const rider = getObjectById(data.joueurs, riderId);
+
+                if (!rider) {
+                    console.warn(`Rider with ID ${riderId} not found in data.`);
+                    return;
+                }
+
+                // Remove highlight from the original row
+                originalRow.classList.remove('highlight');
+
+                // Remove the corresponding row from the selected table
+                const selectedRowToRemove = document.getElementById(`selected${rider.id}`);
+                if (selectedRowToRemove) {
+                    selectedRowToRemove.remove();
+                }
+
+                // Update stats
+                currentTeamCost -= Number(rider.valeur);
+                currentTeamCount--;
+                if (rolesMap[rider.position] === 'All rounder') currentTeamAllrounders--;
+                else if (rolesMap[rider.position] === 'Climber') currentTeamClimbers--;
+                else if (rolesMap[rider.position] === 'Sprinter') currentTeamSprinters--;
+                else if (rolesMap[rider.position] === 'Leader') currentTeamLeaders--;
+
+                updateTeamStatsDisplay();
+            }
+
+            // --- Initial Table Population ---
+            const fragment = document.createDocumentFragment();
+            let count = 0;
+
+            data.joueurs.forEach((rider) => {
+                count++;
+                const row = document.createElement('tr');
+                // Use String() to ensure HTML ID is a string
+                row.id = `rider${rider.id}`;
+                row.classList.add('hover:bg-gray-50', 'transition-colors', 'duration-200', 'ease-in-out');
+
+                // Apply initial styling based on Sets
+                if (initialTeamSet.has(rider.id)) {
+                    row.classList.add('highlight');
+                }
+                if (abandonsSet.has(rider.id)) {
+                    row.classList.add('abandoned');
+                }
+
+                // Create and append cells
+                const cellsData = [
+                    count,
+                    rider.id,
+                    rider.nomcomplet,
+                    rider.id, // Bib number often same as ID
+                    `<img src="https://placehold.co/20x20/E0E0E0/000000?text=T" class="inline-block mr-1" alt="${rider.club}"> ${rider.club}`, // Placeholder for imageclub
+                    rolesMap[rider.position],
+                    `${rider.valeur}<img src="https://placehold.co/16x16/000000/FFFFFF?text=M" class="inline-block ml-1" alt="Currency">` // Placeholder for monnaie.png
+                ];
+
+                cellsData.forEach(cellContent => {
+                    const td = document.createElement('td');
+                    td.classList.add('py-2', 'px-4', 'border-b', 'border-gray-200', 'text-sm', 'text-gray-900');
+                    // For content that includes HTML (like images), use innerHTML
+                    if (typeof cellContent === 'string' && cellContent.includes('<img')) {
+                        td.innerHTML = cellContent;
+                    } else {
+                        td.textContent = cellContent;
+                    }
+                    row.appendChild(td);
+                });
+
+                fragment.appendChild(row);
+            });
+
+            // Append all rows to the DOM in one go
+            riderTableBody.appendChild(fragment);
+
+            // --- Event Delegation for Main Rider Table ---
+            riderTableBody.addEventListener('click', (event) => {
+                const clickedRow = event.target.closest('tr');
+                if (clickedRow && clickedRow.id.startsWith('rider')) { // Ensure it's a rider row
+                    if (clickedRow.classList.contains('highlight')) {
+                        removeSelected(clickedRow);
+                    } else {
+                        addSelected(clickedRow);
+                    }
+                }
+            });
+
+            // --- Initialize selected riders based on initialTeamSet ---
+            // This needs to happen AFTER the main table is populated
+            initialTeamSet.forEach(riderId => {
+                const row = document.getElementById(`rider${riderId}`);
+                if (row) {
+                    // Call addSelected directly, which will handle highlighting and cloning
+                    addSelected(row);
+                }
+            });
+        });
+
+        // --- Sorting Function (kept as is, outside DOMContentLoaded for global access if needed) ---
+        function sortTable(clickedHeader, columnIndex) {
+            const table = clickedHeader.closest('table');
+            const thead = table.tHead;
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.rows);
+
+            // Determine current direction
+            const currentDir = clickedHeader.getAttribute("data-sort-dir") || "desc";
+            const newDir = currentDir === "desc" ? "asc" : "desc";
+
+            // Reset all headers
+            for (const header of thead.rows[0].cells) {
+                const plainText = header.textContent.replace(/[\u25B2\u25BC]/g, "").trim(); // remove ▲ ▼
+                header.textContent = plainText;
+                header.removeAttribute("data-sort-dir");
+            }
+
+            // Add sort indicator to clicked header
+            const indicator = newDir === "asc" ? "▲" : "▼";
+            clickedHeader.innerHTML = clickedHeader.textContent + ` <span class="sort-indicator">${indicator}</span>`;
+            clickedHeader.setAttribute("data-sort-dir", newDir);
+
+            // Sort rows
+            rows.sort((a, b) => {
+                let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
+                let valB = b.cells[columnIndex].textContent.trim().toLowerCase();
+
+                // Special handling for cost column which has an image
+                if (columnIndex === 6) { // Assuming cost is the 7th column (index 6)
+                    valA = parseFloat(valA.replace(/[^\d.]/g, '')); // Remove non-numeric chars
+                    valB = parseFloat(valB.replace(/[^\d.]/g, ''));
+                } else if (!isNaN(valA) && !isNaN(valB)) {
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
+                }
+
+                if (typeof valA === 'number' && typeof valB === 'number') {
+                    return newDir === "asc" ? valA - valB : valB - valA;
+                }
+
+                return newDir === "asc"
+                    ? valA.localeCompare(valB)
+                    : valB.localeCompare(valA);
+            });
+
+            // Rebuild sorted table
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+</body>
+</html>

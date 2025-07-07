@@ -1,0 +1,216 @@
+:root {
+  --bodyBgColor: #000000;
+  --bodyTextColor: #ffffff;
+  --thCellBgColor: #0c0c09;
+  --thCellTextColor: #fff;
+  --tdCellOddBgColor: #1a1a1a;
+  --tdCellOddTextColor: #fff;
+  --tdCellEvenBgColor: #0c0c09;
+  --tdCellEvenTextColor: #fff;
+  --trHighlightBgColor: #FEED01;
+  --trHighlightTextColor: #000;
+  --statBgColor: #1fa000;
+  --statTextColor: #ffffff;
+  --leaderColor:#42a62a;
+  --sprinterColor:#0094e1;
+  --climberColor:#ff7800;
+  --allrounderColor:#ffba00;
+  --abandonedColor:#ff0000;
+}
+
+body,
+p,
+th,
+td,
+li {
+  font-family: arial, helvetica, sans-serif;
+}
+
+body {
+  background-color: var(--bodyBgColor);
+  color: var(--bodyTextColor);
+}
+
+.header {
+  text-align: center;
+}
+
+.header .flexbox {
+  justify-content: center;
+}
+
+.logoWrapper {
+  margin: 0 auto;
+  width: fit-content;
+  background: #FEED01;
+  border-radius: 10px;
+  padding: 5px 10px;
+  color: #000000;
+}
+
+.logoWrapper>div {
+  display: flex;
+  column-gap: 10px;
+}
+
+img.logo {
+  width: 80px;
+  height: auto;
+  align-self: center;
+}
+
+.tableWrapper {
+  display: flex;
+  column-gap: 10px;
+}
+
+.tableWrapper>* {
+  flex-basis: 100%;
+}
+
+.tableWrapper table {
+  width: 100%;
+}
+
+.tableHeading {
+  margin: 0;
+  padding: 0;
+  text-align:center;
+}
+
+table#selectedRidersTable {
+  display:none;
+}
+
+table#selectedRidersTable td {
+  padding:8px 4px;
+}
+
+.costCount, .roles {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+  column-gap: 10px;
+  row-gap: 10px;
+  text-align: center;
+  margin: 10px 0;
+  width: calc(100% - 4px);
+}
+
+.costCount>div, .roles>div {
+  background: var(--statBgColor);
+  color: var(--statTextColor);
+  border-radius: 10px;
+  flex: 1 calc(50% - 9px);
+  border: 2px solid #ffffff;
+  padding:10px 0;
+}
+
+.roles>div {
+  flex: 1 calc(25% - 12px);
+}
+
+.statsWrapper .statLeaders {background: var(--leaderColor);}
+.statsWrapper .statClimbers {background: var(--climberColor);}
+.statsWrapper .statSprinters {background: var(--sprinterColor);}
+.statsWrapper .statAllrounders {background: var(--allrounderColor);}
+
+.statsWrapper .error {
+  background: #ff0000;
+  color: #ffffff;
+}
+
+.statsWrapper .errorMessage {
+  display:none;
+}
+
+.statsWrapper h4 {
+  margin:0;
+  padding:0;
+}
+
+.statsWrapper .error .errorMessage {
+  display:unset;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  padding: 4px;
+}
+
+th {
+  cursor: pointer;
+  padding: 10px 5px;
+}
+
+table tbody tr.abandoned td {
+  text-decoration: line-through;
+  color: #f00;
+  opacity: 0.5;
+}
+
+.team img {
+  vertical-align: middle;
+  width: 20px;
+}
+
+tr.lib_rouleur .riderRole {
+  border-left: 7px solid  var(--allrounderColor);
+}
+
+tr.lib_grimpeur .riderRole {
+  border-left: 7px solid  var(--climberColor);
+}
+
+tr.lib_baroudeur .riderRole {
+  border-left: 7px solid  var(--sprinterColor);
+}
+
+tr.lib_leader .riderRole {
+  border-left: 7px solid var(--leaderColor);
+}
+
+tr.abandoned .riderRole {
+  border-left: 7px solid  var(--abandonedColor);
+}
+
+table tr.highlight td {
+  color: var(--trHighlightTextColor);
+  background: var(--trHighlightBgColor);
+}
+
+table {
+  font-size: 12px;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+table thead th {
+  text-transform: capitalize;
+  font-size: 13px;
+  background: var(--thCellBgColor);
+  color: var(--thCellTextColor);
+  cursor: pointer;
+}
+
+table tbody tr:nth-child(odd) {
+  background: var(--tdCellOddBgColor);
+  color: var(--tdCellOddTextColor);
+}
+
+table tbody tr:nth-child(even) {
+  background: var(--tdCellEvenBgColor);
+  color: var(--tdCellEvenTextColor);
+}
+
+table tbody td {
+  border-top: 1px solid #fff;
+}
+
+table tbody tr:hover td {
+  /* background: #d0dafd; */
+}

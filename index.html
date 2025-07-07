@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TDF Fantasy Data</title>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
+  <script src="data.js"></script>
+  <script src="tdf.js"></script>
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" rel="stylesheet"/> -->
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="logoWrapper">
+      <div>
+        <img src="images/logo-tdf.png" class="logo" />
+        <h2>Rider selections</h2>
+      </div>
+    </div>
+  </div>
+  <div class="tableWrapper">
+    <div>
+      <h3 class="tableHeading">Your selection</h3>
+      <p id="noRidersSelected">You have no selected riders.<br />Choose some from the rider list to add them here.</p>
+      <table id="selectedRidersTable" border="2" class="sortable">
+        <thead>
+          <!-- <th>#</th> -->
+          <!-- <th>ID</th> -->
+          <th>Name</th>
+          <th>Role</th>
+          <th>Club</th>
+          <th>Bib#</th>
+          <th>Price</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="statsWrapper">
+        <div class="costCount">
+          <div>
+            <h4>Cost: <span id="teamCost">0</span>/120<img src="images/monnaie.png" /></h4>
+            <p class="errorMessage">Max 120 credits</p>
+          </div>
+          <div>
+            <h4>Count: <span id="teamCount">0</span>/8</h4>
+            <p class="errorMessage">Need 8 team mates</p>
+          </div>
+        </div>
+        <div class="roles">
+          <div class="statLeaders">
+            <h4>Leaders: <span id="teamLeaders">0</h4>
+            <p class="errorMessage">Max 3 leaders</p>
+          </div>
+          <div class="statSprinters">
+            <h4>Sprinters: <span id="teamSprinters">0</h4>
+            <p class="errorMessage">Max 3 sprinters</p>
+          </div>
+          <div class="statClimbers">
+            <h4>Climbers: <span id="teamClimbers">0</h4>
+            <p class="errorMessage">Max 3 climbers</p>
+          </div>
+          <div class="statAllrounders">
+            <h4>All rounders: <span id="teamAllrounders">0</h4>
+            <p class="errorMessage">Max 5 all rounders</p>
+          </div>
+        </div>
+        <p>
+          Click on a rider name on either table to add/remove them from your selection.<br />
+          Click a column heading on either table to sort by that column.<br />
+          Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
+        </p>
+        <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes above:</p>
+        <ul>
+          <li>Max spend is 120 credits</li>
+          <li>You need 8 team mates</li>
+          <li>Max 3 leaders</li>
+          <li>Max 3 sprinters</li>
+          <li>Max 3 climbers</li>
+          <li>Max 5 all rounders</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3 class="tableHeading">All riders</h3>
+      <table id="riderListTable" border="2" class="sortable">
+        <thead>
+          <tr>
+            <!-- <th>#</th> -->
+            <!-- <th>ID</th> -->
+            <th>Name</th>
+            <th>Role</th>
+            <th>Club</th>
+            <th>Bib#</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody data-sort="asc">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>

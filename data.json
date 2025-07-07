@@ -1,0 +1,746 @@
+var data = {
+	"joueurs": [{
+            "imageclub": "m_letour25_uad_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 164,
+            "idws": "10014972740",
+            "bib": "1",
+            "nom": "T. POGACAR",
+            "nomcomplet": "Tadej POGACAR",
+            "valeur": "27",
+            "id_club": 21,
+            "club": "UAE Team Emirates XRG",
+            "trgclub": "UAE Team Emirates XRG",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 43,
+            "position": "lib_leader",
+            "position_trg": "lib_leader_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select T. POGACAR",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_tvl_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 96,
+            "idws": "10011208231",
+            "bib": "11",
+            "nom": "J. VINGEGAARD HANSEN",
+            "nomcomplet": "Jonas VINGEGAARD HANSEN",
+            "valeur": "24",
+            "id_club": 20,
+            "club": "Team Visma | Lease a Bike",
+            "trgclub": "Team Visma | Lease a Bike",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 43,
+            "position": "lib_leader",
+            "position_trg": "lib_leader_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select J. VINGEGAARD HANSEN",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "num": 3,
+            "place": "terrain",
+            "numplace": 3,
+            "id_position": 46,
+            "imageclub": "m_letour25_ltk_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": true,
+            "occupe": true,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "1232569",
+            "var1": false,
+            "var2": false,
+            "id": 365,
+            "idws": "10030115147",
+            "bib": "81",
+            "nom": "J. MILAN",
+            "nomcomplet": "Jonathan MILAN",
+            "valeur": "22",
+            "id_club": 19,
+            "club": "Lidl-Trek",
+            "trgclub": "Lidl-Trek",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "position": "lib_baroudeur",
+            "position_trg": "lib_baroudeur_court",
+            "decale": false,
+            "dateachat": "2025-07-04T13:22:06.000Z",
+            "allstar": false,
+            "tituremp": "2.0",
+            "prixachat": 22,
+            "plusvalue": 0,
+            "propage": false,
+            "off": false,
+            "pointssupp": 0,
+            "capitaine": true,
+            "supersub": 0,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "This player already belongs to you",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": true,
+                    "msg": "",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player is already stage winner bonus",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "vendre",
+                    "msg": "Deselect J. MILAN",
+                    "icon": "cancel"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_soq_v1.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 238,
+            "idws": "10007096239",
+            "bib": "24",
+            "nom": "T. MERLIER",
+            "nomcomplet": "Tim MERLIER",
+            "valeur": "22",
+            "id_club": 16,
+            "club": "Soudal Quick-Step",
+            "trgclub": "Soudal Quick-Step",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 46,
+            "position": "lib_baroudeur",
+            "position_trg": "lib_baroudeur_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select T. MERLIER",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_adc_v1.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 14,
+            "idws": "10014827543",
+            "bib": "101",
+            "nom": "J. PHILIPSEN",
+            "nomcomplet": "Jasper PHILIPSEN",
+            "valeur": "22",
+            "id_club": 2,
+            "club": "Alpecin - Deceuninck",
+            "trgclub": "Alpecin - Deceuninck",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 46,
+            "position": "lib_baroudeur",
+            "position_trg": "lib_baroudeur_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select J. PHILIPSEN",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_adc_v1.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 9,
+            "idws": "10007946203",
+            "bib": "106",
+            "nom": "M. VAN DER POEL",
+            "nomcomplet": "Mathieu VAN DER POEL",
+            "valeur": "22",
+            "id_club": 2,
+            "club": "Alpecin - Deceuninck",
+            "trgclub": "Alpecin - Deceuninck",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 44,
+            "position": "lib_rouleur",
+            "position_trg": "lib_rouleur_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select M. VAN DER POEL",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "num": 1,
+            "place": "terrain",
+            "numplace": 1,
+            "id_position": 43,
+            "imageclub": "m_letour25_soq_v1.png?v=44",
+            "logoclub": "",
+            "mappartient": true,
+            "occupe": true,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "677280",
+            "var1": false,
+            "var2": false,
+            "id": 233,
+            "idws": "10058736615",
+            "bib": "21",
+            "nom": "R. EVENEPOEL",
+            "nomcomplet": "Remco EVENEPOEL",
+            "valeur": "21",
+            "id_club": 16,
+            "club": "Soudal Quick-Step",
+            "trgclub": "Soudal Quick-Step",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "position": "lib_leader",
+            "position_trg": "lib_leader_court",
+            "decale": false,
+            "dateachat": "2025-07-02T13:12:25.000Z",
+            "allstar": false,
+            "tituremp": "1.0",
+            "prixachat": 21,
+            "plusvalue": 0,
+            "propage": false,
+            "off": false,
+            "pointssupp": 0,
+            "capitaine": false,
+            "supersub": 0,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "This player already belongs to you",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": true,
+                    "msg": "",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": true,
+                    "msg": "",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "vendre",
+                    "msg": "Deselect R. EVENEPOEL",
+                    "icon": "cancel"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_rbh_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 241,
+            "idws": "10008888921",
+            "bib": "71",
+            "nom": "P. ROGLIC",
+            "nomcomplet": "Primoz ROGLIC",
+            "valeur": "20",
+            "id_club": 5,
+            "club": "Red Bull - Bora - Hansgrohe",
+            "trgclub": "Red Bull - Bora - Hansgrohe",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 43,
+            "position": "lib_leader",
+            "position_trg": "lib_leader_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select P. ROGLIC",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_uad_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 206,
+            "idws": "10010784057",
+            "bib": "2",
+            "nom": "J. ALMEIDA",
+            "nomcomplet": "Joao ALMEIDA",
+            "valeur": "20",
+            "id_club": 21,
+            "club": "UAE Team Emirates XRG",
+            "trgclub": "UAE Team Emirates XRG",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 45,
+            "position": "lib_grimpeur",
+            "position_trg": "lib_grimpeur_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select J. ALMEIDA",
+                    "icon": "add_circle"
+                }
+            }
+        },
+        {
+            "imageclub": "m_letour25_uad_v2.png?v=44",
+            "logoclub": "",
+            "mappartient": false,
+            "occupe": false,
+            "proprietaire": {
+                "id": ""
+            },
+            "matchencours": false,
+            "id_journeejoueur": "",
+            "var1": false,
+            "var2": false,
+            "id": 143,
+            "idws": "10007059055",
+            "bib": "8",
+            "nom": "A. YATES",
+            "nomcomplet": "Adam YATES",
+            "valeur": "19",
+            "id_club": 21,
+            "club": "UAE Team Emirates XRG",
+            "trgclub": "UAE Team Emirates XRG",
+            "date_match": "2025-07-05T11:20:00.000Z",
+            "matchstatut": "",
+            "matchdemarre": false,
+            "id_position": 43,
+            "position": "lib_leader",
+            "position_trg": "lib_leader_court",
+            "decale": false,
+            "allstar": false,
+            "badge": false,
+            "actions": {
+                "acheter": {
+                    "possible": false,
+                    "msg": "Insufficient budget",
+                    "cout": 0
+                },
+                "vendre": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "selectcap": {
+                    "possible": false,
+                    "msg": "This player does not belong to you",
+                    "cout": 0
+                },
+                "defaut": {
+                    "action": "acheter",
+                    "msg": "Select A. YATES",
+                    "icon": "add_circle"
+                }
+            }
+        }
+    ],
+    "total": "184",
+    "clubs": [
+        {
+            "id_club": "2",
+            "club": "adc",
+            "image": "letour25_adc_v1",
+            "label": "Alpecin - Deceuninck",
+            "imageclub": "m_letour25_adc_v1.png?v=44"
+        },
+        {
+            "id_club": "3",
+            "club": "ark",
+            "image": "letour25_ark_v1",
+            "label": "Arkea-B&B Hotels",
+            "imageclub": "m_letour25_ark_v1.png?v=44"
+        },
+        {
+            "id_club": "17",
+            "club": "tbv",
+            "image": "letour25_tbv_v1",
+            "label": "Bahrain Victorious",
+            "imageclub": "m_letour25_tbv_v1.png?v=44"
+        },
+        {
+            "id_club": "6",
+            "club": "cof",
+            "image": "letour25_cof_v1",
+            "label": "Cofidis",
+            "imageclub": "m_letour25_cof_v1.png?v=44"
+        },
+        {
+            "id_club": "1",
+            "club": "dat",
+            "image": "letour25_dat_v2",
+            "label": "Decathlon AG2R La Mondiale Team",
+            "imageclub": "m_letour25_dat_v2.png?v=44"
+        },
+        {
+            "id_club": "8",
+            "club": "efe",
+            "image": "letour25_efe_v2",
+            "label": "EF Education - Easypost",
+            "imageclub": "m_letour25_efe_v2.png?v=44"
+        },
+        {
+            "id_club": "9",
+            "club": "gfc",
+            "image": "letour25_gfc_v2",
+            "label": "Groupama - FDJ",
+            "imageclub": "m_letour25_gfc_v2.png?v=44"
+        },
+        {
+            "id_club": "11",
+            "club": "igd",
+            "image": "letour25_igd_v2",
+            "label": "Ineos Grenadiers",
+            "imageclub": "m_letour25_igd_v2.png?v=44"
+        },
+        {
+            "id_club": "10",
+            "club": "iwa",
+            "image": "letour25_iwa_v1",
+            "label": "Intermarch\u00e9 - Wanty",
+            "imageclub": "m_letour25_iwa_v1.png?v=44"
+        },
+        {
+            "id_club": "12",
+            "club": "ipt",
+            "image": "letour25_ipt_v2",
+            "label": "Isra\u00ebl - Premier Tech",
+            "imageclub": "m_letour25_ipt_v2.png?v=44"
+        },
+        {
+            "id_club": "19",
+            "club": "ltk",
+            "image": "letour25_ltk_v2",
+            "label": "Lidl-Trek",
+            "imageclub": "m_letour25_ltk_v2.png?v=44"
+        },
+        {
+            "id_club": "14",
+            "club": "lot",
+            "image": "letour25_lot_v2",
+            "label": "Lotto",
+            "imageclub": "m_letour25_lot_v2.png?v=44"
+        },
+        {
+            "id_club": "15",
+            "club": "mov",
+            "image": "letour25_mov_v2",
+            "label": "Movistar Team",
+            "imageclub": "m_letour25_mov_v2.png?v=44"
+        },
+        {
+            "id_club": "5",
+            "club": "rbh",
+            "image": "letour25_rbh_v2",
+            "label": "Red Bull - Bora - Hansgrohe",
+            "imageclub": "m_letour25_rbh_v2.png?v=44"
+        },
+        {
+            "id_club": "16",
+            "club": "soq",
+            "image": "letour25_soq_v1",
+            "label": "Soudal Quick-Step",
+            "imageclub": "m_letour25_soq_v1.png?v=44"
+        },
+        {
+            "id_club": "13",
+            "club": "jay",
+            "image": "letour25_jay_v1",
+            "label": "Team Jayco AlUla",
+            "imageclub": "m_letour25_jay_v1.png?v=44"
+        },
+        {
+            "id_club": "7",
+            "club": "tpp",
+            "image": "letour25_tpp_v1",
+            "label": "Team Picnic PostNL",
+            "imageclub": "m_letour25_tpp_v1.png?v=44"
+        },
+        {
+            "id_club": "20",
+            "club": "tvl",
+            "image": "letour25_tvl_v2",
+            "label": "Team Visma | Lease a Bike",
+            "imageclub": "m_letour25_tvl_v2.png?v=44"
+        },
+        {
+            "id_club": "18",
+            "club": "ten",
+            "image": "letour25_ten_v2",
+            "label": "TotalEnergies",
+            "imageclub": "m_letour25_ten_v2.png?v=44"
+        },
+        {
+            "id_club": "23",
+            "club": "tud",
+            "image": "letour25_tud_v2",
+            "label": "Tudor Pro Cycling Team",
+            "imageclub": "m_letour25_tud_v2.png?v=44"
+        },
+        {
+            "id_club": "21",
+            "club": "uad",
+            "image": "letour25_uad_v2",
+            "label": "UAE Team Emirates XRG",
+            "imageclub": "m_letour25_uad_v2.png?v=44"
+        },
+        {
+            "id_club": "22",
+            "club": "uxm",
+            "image": "letour25_uxm_v1",
+            "label": "Uno-X Mobility",
+            "imageclub": "m_letour25_uxm_v1.png?v=44"
+        },
+        {
+            "id_club": "4",
+            "club": "xat",
+            "image": "letour25_xat_v1",
+            "label": "XDS Astana Team",
+            "imageclub": "m_letour25_xat_v1.png?v=44"
+        }
+    ],
+    "positions": [
+        {
+            "id_position": "43",
+            "position": "lib_leader",
+            "nbmax": "3",
+            "label": "Leaders"
+        },
+        {
+            "id_position": "44",
+            "position": "lib_rouleur",
+            "nbmax": "5",
+            "label": "All-rounders"
+        },
+        {
+            "id_position": "45",
+            "position": "lib_grimpeur",
+            "nbmax": "3",
+            "label": "Climbers"
+        },
+        {
+            "id_position": "46",
+            "position": "lib_baroudeur",
+            "nbmax": "3",
+            "label": "Sprinters"
+        }
+    ],
+    "idjg": "46073"
+}
