@@ -21,7 +21,7 @@
 		c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/>
 </g>
 </svg> -->
-<span id="infoBtn">i</span>
+  <span id="infoBtn">i</span>
   <!-- <img src="images/icon-info.svg" alt="Info" id="infoBtn"> -->
   <div class="header">
     <div class="logoWrapper">
@@ -31,24 +31,24 @@
       </div>
     </div>
   </div>
-        <div class="infoWrapper">
-          <p>
-            Click on a rider name on either table to add/remove them from your selection.<br />
-            Click a column heading on either table to sort by that column.<br />
-            Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
-          </p>
-          <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes underneath your team selection:</p>
-          <ul>
-            <li>Max spend is 120 credits</li>
-            <li>You need 8 team mates</li>
-            <li>Max 3 leaders</li>
-            <li>Max 3 sprinters</li>
-            <li>Max 3 climbers</li>
-            <li>Max 5 all rounders</li>
-          </ul>
-          <button type="button" id="closeInfo">Close this info panel</button>
-          <p>You can show this info panel at any time by clicking on the <span class="iLogo">i</span> logo at the top of the page.</p>
-        </div>
+  <div class="infoWrapper">
+    <p>
+      Click on a rider name on either table to add/remove them from your selection.<br />
+      Click a column heading on either table to sort by that column.<br />
+      Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
+    </p>
+    <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes underneath your team selection:</p>
+    <ul>
+      <li>Max spend is 120 credits</li>
+      <li>You need 8 team mates</li>
+      <li>Max 3 leaders</li>
+      <li>Max 3 sprinters</li>
+      <li>Max 3 climbers</li>
+      <li>Max 5 all rounders</li>
+    </ul>
+    <button type="button" id="closeInfo">Close this info panel</button>
+    <p>You can show this info panel at any time by clicking on the <span class="iLogo">i</span> icon at the top of the page.</p>
+  </div>
   <div class="tableWrapper">
     <div class="selectedRidersWrapper">
       <h3 class="tableHeading">Current selection</h3>
@@ -99,6 +99,9 @@
     </div>
     <div class="riderListWrapper">
       <h3 class="tableHeading">Add riders by clicking below</h3>
+      <div class="filterWrapper">
+        <input type="text" id="riderFilterInput" placeholder="Filter list by name, team, role, bib, or cost...">
+      </div>
       <table id="riderListTable" class="sortable">
         <thead>
           <tr>
