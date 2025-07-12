@@ -29,7 +29,8 @@ body {
   margin: 0px;
 }
 
-div, input {
+div,
+input {
   box-sizing: border-box;
 }
 
@@ -71,56 +72,76 @@ img.logo {
 .infoWrapper {
   border: 1px solid #fff;
   border-radius: 10px;
-  padding:10px;
-  margin-bottom:10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .hideInfo .infoWrapper {
-  display:none;
+  display: none;
 }
 
 #infoBtn {
-  width:50px;
-  height:50px;
+  width: 50px;
+  height: 50px;
   line-height: 50px;
-  position:absolute;
-  top:10px;
-  right:10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background-color: #fff;
-  color:#000;
-  cursor:pointer;
-  display: inline-block; /* Or use flexbox for centering */
-  text-align: center; /* For horizontal alignment */
+  color: #000;
+  cursor: pointer;
+  display: inline-block;
+  /* Or use flexbox for centering */
+  text-align: center;
+  /* For horizontal alignment */
   font-size: 3rem;
   border-radius: 50%;
-  font-family:'Times New Roman', Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   font-weight: bolder;
 }
 
 .iLogo {
-  padding:5px;
-  width:20px;
-  height:20px;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
   line-height: 20px;
   display: inline-block;
   text-align: center;
   border-radius: 50%;
-  background:#fff;
-  color:#000;
-  font-family:'Times New Roman', Times, serif;
+  background: #fff;
+  color: #000;
+  font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   font-weight: bolder;
   font-size: 1.5rem;
 }
 
 #closeInfo {
-  padding:10px;
+  padding: 10px;
   background-color: var(--allrounderColor);
   font-size: 1.3rem;
   font-weight: bold;
   border-radius: 5px;
-  cursor:pointer;
+  cursor: pointer;
+}
+
+.slotWrapper {
+  display: flex;
+  column-gap: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.slotWrapper>* {
+  flex: 1 1 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.slotActive {
+  background-color: green;
+  color: white;
 }
 
 .costCount,
@@ -151,7 +172,6 @@ img.logo {
   background: var(--statBgColor);
   color: var(--statTextColor);
   border-radius: 10px;
-  flex: 1 1 calc(50% - 10px);
   border: 2px solid #ffffff;
   padding: 10px 0;
 }
@@ -193,18 +213,39 @@ img.logo {
 .filterWrapper {
   text-align: center;
   margin-bottom: 10px;
-  max-width:100%;
+  max-width: 100%;
 }
 
 .filterWrapper #riderFilterInput {
-  padding:10px;
+  padding: 10px;
   border-radius: 5px;
-  width:100%;
+  width: 100%;
+}
+
+.filter {
+  position: relative;
+}
+
+#riderFilterClearBtn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background-color: transparent;
+  background-image: none;
+  margin: 0;
+  border:0 none;
+}
+
+#riderFilterClearBtn svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 table {
   border-collapse: collapse;
-  border:1px solid #fff;
+  border: 1px solid #fff;
 }
 
 td {
@@ -283,7 +324,7 @@ tr.highlight td {
   column-gap: 10px;
 }
 
-.selectedRidersWrapper, 
+.selectedRidersWrapper,
 .riderListWrapper {
   flex: 1 1 100%;
 }
@@ -292,7 +333,7 @@ table#selectedRidersTable {
   display: none;
 }
 
-table#riderListTable td, 
+table#riderListTable td,
 table#selectedRidersTable td {
   font-size: 1rem;
 }
@@ -317,6 +358,7 @@ table#selectedRidersTable td {
 }
 
 @media (min-width: 720px) {
+
   /* make position stats 4x1 */
   .roles>div {
     flex: 1 1 auto;
@@ -325,7 +367,8 @@ table#selectedRidersTable td {
 
 @media (min-width: 1200px) {
   .tableWrapper {
-    flex-flow: row nowrap;;
+    flex-flow: row nowrap;
+    ;
   }
 
   .selectedRidersWrapper {
@@ -336,11 +379,11 @@ table#selectedRidersTable td {
     flex: 1 1 40%;
   }
 
-table#selectedRidersTable td {
-  font-size: 1.1rem;
-}
+  table#selectedRidersTable td {
+    font-size: 1.1rem;
+  }
 
-table#riderListTable td {
-  font-size: 0.8rem;
-}
+  table#riderListTable td {
+    font-size: 0.8rem;
+  }
 }

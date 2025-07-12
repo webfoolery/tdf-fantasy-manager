@@ -6,7 +6,7 @@ Filter for all rider list
 
 */
 const startingTeam = [];
-const abandons = [264, 352, 14, 98, 328];
+const abandons = [264, 352, 14, 98, 328, 387, 177];
 const LOCAL_STORAGE_KEY = 'selectedRiderTeam';
 const rolesMap = {
 	lib_rouleur: 'All rounder',
@@ -16,6 +16,7 @@ const rolesMap = {
 	abandoned: 'Abandoned',
 };
 let count = 0;
+let currentSlot = 1;
 let currentTeamCost = 0;
 let currentTeamCount = 0;
 let currentTeamLeaders = 0;
@@ -27,6 +28,7 @@ let currentSelectedRiderIds = [];
 
 document.addEventListener('DOMContentLoaded', function () {
 	const riderFilterInput = document.getElementById('riderFilterInput');
+	const riderFilterClearBtn = document.getElementById('riderFilterClearBtn');
 	const riderListTable = document.getElementById('riderListTable');
 	const riderListTbody = document.querySelector('#riderListTable tbody');
 	const selectedRidersTable = document.getElementById('selectedRidersTable');
@@ -47,17 +49,17 @@ document.addEventListener('DOMContentLoaded', function () {
 		row.classList.add(rider.position);
 		if (startingTeam.indexOf(rider.id) != -1) row.classList.add('highlight');
 		if (abandons.indexOf(rider.id) != -1) row.classList.add('abandoned');
-		
+
 		// SOME WORDS ARE TOO LONG & AFFECT LAYOUT!
 		if (rider.club == 'TotalEnergies') rider.club = 'Total Energies';
 		if (rider.nomcomplet.includes('SINTMAARTENSDIJK')) rider.nomcomplet = rider.nomcomplet.replace('SINTMAARTENSDIJK', 'SINTMRTNSDJK');
-		
+
 		const cellsData = {
 			// count: count,
 			// id: rider.id,
 			riderName: rider.nomcomplet,
 			riderRole: rolesMap[rider.position],
-			team: `<img src="images/teams/${rider.imageclub}" width="20px" alt="${rider.club}"> ${rider.club}`,
+			team: `<img src="images/teams/${rider.imageclub}" width="20px" alt="${rider.club}" title="ID ${rider.id}"> ${rider.club}`,
 			riderBib: rider.bib,
 			riderCost: `${rider.valeur}<img src="images/monnaie.png" />`
 		};
@@ -74,35 +76,46 @@ document.addEventListener('DOMContentLoaded', function () {
 	riderListTbody.appendChild(fragment);
 	let loadedTeamIds = loadSelectedRiders();
 	if (!Array.isArray(loadedTeamIds) || loadedTeamIds.length === 0) {
-		console.log("No saved team found in localStorage, using starting team.");
+		// console.log("No saved team found in localStorage, using starting team.");
 		currentSelectedRiderIds = [...startingTeam]; // Initialize with startingTeam
 	} else {
-		console.log("Loaded team from localStorage:", loadedTeamIds);
+		// console.log("Loaded team from localStorage:", loadedTeamIds);
 		currentSelectedRiderIds = loadedTeamIds; // Use loaded team
 	}
-	currentSelectedRiderIds.forEach(riderId => {
-		const row = document.getElementById(`rider${riderId}`);
-		if (row) {
-			addSelected(row, true); // This will add highlight, clone, update stats, and save to localStorage
-		}
-	});
+	// currentSelectedRiderIds.forEach(riderId => {
+	// 	const row = document.getElementById(`rider${riderId}`);
+	// 	if (row) {
+	// 		addSelected(row, true); // This will add highlight, clone, update stats, and save to localStorage
+	// 	}
+	// });
+	updateSelectedRiders(currentSelectedRiderIds)
 
-	// CLICK EVENT TO SELECT/DESELECT RIDERS
-	riderListTbody.addEventListener('click', (event) => {
-		const clickedRow = event.target.closest('tr');
-		if (clickedRow && clickedRow.id.startsWith('rider')) {
-			if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
-			else addSelected(clickedRow);
-		}
-	});
-
-	// TABLE HEADER CLICK EVENT TO TRIGGER COLUMN SORTS
-	document.querySelectorAll('table.sortable th').forEach((th) => {
-		th.addEventListener('click', (e) => {
-			sortTable(e.target);
-			console.log('-----sorting-----');
+	function updateSelectedRiders(currentSelectedRiderIds) {
+		currentTeamCost = 0;
+		currentTeamCount = 0;
+		currentTeamLeaders = 0;
+		currentTeamSprinters = 0;
+		currentTeamClimbers = 0;
+		currentTeamAllrounders = 0;
+		selectedRidersTbody.querySelectorAll('table#selectedRidersTable tbody tr').forEach((tr) => {
+			tr.remove();
 		});
-	});
+		riderListTbody.querySelectorAll('tr.highlight').forEach((tr) => {
+			tr.classList.remove('highlight');
+		});
+		for (const header of selectedRidersTable.tHead.rows[0].cells) {
+			const plainText = header.textContent.replace(/[\u25B2\u25BC]/g, "").trim();
+			header.textContent = plainText;
+			header.removeAttribute("data-sort-dir");
+		}
+		currentSelectedRiderIds.forEach(riderId => {
+			const row = document.getElementById(`rider${riderId}`);
+			if (row) {
+				addSelected(row, true); // This will add highlight, clone, update stats, and save to localStorage
+			}
+		});
+		updateTeamStatsDisplay();
+	}
 
 	function addSelected(row, init = false) {
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
@@ -210,9 +223,25 @@ document.addEventListener('DOMContentLoaded', function () {
 		else climberEl.classList.remove('error');
 		if (currentTeamSprinters > 3) sprinterEl.classList.add('error');
 		else sprinterEl.classList.remove('error');
-		if (currentTeamAllrounders > 3) allrounderEl.classList.add('error');
+		if (currentTeamAllrounders > 5) allrounderEl.classList.add('error');
 		else allrounderEl.classList.remove('error');
 	}
+
+	// CLICK EVENT TO SELECT/DESELECT RIDERS
+	riderListTbody.addEventListener('click', (event) => {
+		const clickedRow = event.target.closest('tr');
+		if (clickedRow && clickedRow.id.startsWith('rider')) {
+			if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
+			else addSelected(clickedRow);
+		}
+	});
+
+	// TABLE HEADER CLICK EVENT TO TRIGGER COLUMN SORTS
+	document.querySelectorAll('table.sortable th').forEach((th) => {
+		th.addEventListener('click', (e) => {
+			sortTable(e.target);
+		});
+	});
 
 	document.getElementById('closeInfo').addEventListener('click', (e) => {
 		document.body.classList.add('hideInfo');
@@ -224,11 +253,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	riderFilterInput.addEventListener('input', filterTable);
 
+	riderFilterClearBtn.addEventListener('click', () => {
+		riderFilterInput.value = ''; // Clear the input
+		filterTable(); // Re-apply filter to show all rows
+	});
+
+	document.querySelectorAll('.slotWrapper button').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			currentSlot = btn.dataset.team;
+			document.querySelector('.slotActive').classList.remove('slotActive');
+			btn.classList.add('slotActive');
+			currentSelectedRiderIds = loadSelectedRiders();
+			updateSelectedRiders(currentSelectedRiderIds)
+		});
+	});
+
+	// document.getElementById('#slot1').addEventListener('click', (e) => {
+	// 	currentSlot=1;
+	// 	loadSelectedRiders();
+	// });
+
+	// document.getElementById('#slot2').addEventListener('click', (e) => {
+	// 	currentSlot=2;
+	// 	loadSelectedRiders();
+	// });
+
+	// document.getElementById('#slot3').addEventListener('click', (e) => {
+	// 	currentSlot=3;
+	// 	loadSelectedRiders();
+	// });
+
 });
 
 function saveSelectedRiders(riderIds) {
 	try {
-		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(riderIds));
+		localStorage.setItem(LOCAL_STORAGE_KEY + currentSlot, JSON.stringify(riderIds));
 	} catch (e) {
 		console.error("Error saving to localStorage:", e);
 	}
@@ -236,8 +295,12 @@ function saveSelectedRiders(riderIds) {
 
 function loadSelectedRiders() {
 	try {
-		const storedTeam = localStorage.getItem(LOCAL_STORAGE_KEY);
-		return storedTeam ? JSON.parse(storedTeam) : null;
+		const storedTeam = localStorage.getItem(LOCAL_STORAGE_KEY + currentSlot);
+		if (storedTeam) {
+			document.body.classList.add('hideInfo');
+			return JSON.parse(storedTeam);
+		}
+		else return null;
 	} catch (e) {
 		console.error("Error loading from localStorage:", e);
 		return null;
@@ -267,7 +330,6 @@ function sortTable(clickedHeader) {
 	rows.sort((a, b) => {
 		let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
 		let valB = b.cells[columnIndex].textContent.trim().toLowerCase();
-		console.log(valA, valB);
 		if (!isNaN(valA) && !isNaN(valB)) {
 			valA = parseFloat(valA);
 			valB = parseFloat(valB);
