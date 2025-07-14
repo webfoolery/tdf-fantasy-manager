@@ -117,6 +117,11 @@ img.logo {
   font-size: 1.5rem;
 }
 
+.infoCopy {
+  height: 22px;
+  vertical-align: middle;
+}
+
 #closeInfo {
   padding: 10px;
   background-color: var(--allrounderColor);
@@ -133,15 +138,52 @@ img.logo {
   margin-bottom: 10px;
 }
 
-.slotWrapper>* {
+.slotWrapper>button {
   flex: 1 1 100%;
   padding: 10px;
   border-radius: 5px;
 }
 
+.copyDestinationSelectWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#copySlot img {
+  max-height: 40px;
+  cursor: pointer;
+}
+
 .slotActive {
   background-color: green;
   color: white;
+}
+
+.copyTeamDestination {
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0 10px 10px 0;
+  text-align: center;
+}
+
+.copyTeamDestination.active {
+  background-color: var(--statBgColor);
+  color: var(--statTextColor);
+}
+
+#copyTeamExecute {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--allrounderColor);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#copyTeamExecute:disabled {
+  background-color: rgb(197, 197, 197);
+  cursor: not-allowed;
 }
 
 .costCount,
@@ -174,6 +216,7 @@ img.logo {
   border-radius: 10px;
   border: 2px solid #ffffff;
   padding: 10px 0;
+  flex: 1 1 calc(50% - 10px);
 }
 
 .statsWrapper .statLeaders {
@@ -235,12 +278,16 @@ img.logo {
   background-color: transparent;
   background-image: none;
   margin: 0;
-  border:0 none;
+  border: 0 none;
 }
 
 #riderFilterClearBtn svg {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+.sortIndicator {
+  font-size: 0.6rem;
 }
 
 table {
@@ -305,7 +352,8 @@ tr.abandoned .riderRole {
   border-left: 7px solid var(--abandonedColor);
 }
 
-tr.abandoned td {
+tr.abandoned td,
+.infoAbandon {
   text-decoration: line-through;
   color: #f00;
 }
@@ -356,6 +404,58 @@ table#selectedRidersTable td {
   vertical-align: middle;
   width: 20px;
 }
+
+
+
+
+
+/* ----------- */
+/* MODAL STUFF */
+/* ----------- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal.modalOpen {
+  display: initial;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: max-content;
+  max-width: 90%;
+  color: black;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modalCloseIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* ---------------- */
+/* RESPONSIVE STUFF */
+/* ---------------- */
 
 @media (min-width: 720px) {
 

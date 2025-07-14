@@ -1,12 +1,11 @@
-
 /*
 TODO::
-Filter for all rider list
-3x slots for different team configs
-
+duplicate list
+add/remove rider to abandon list
+import/export local storage to different machine
 */
-const startingTeam = [];
-const abandons = [264, 352, 14, 98, 328, 387, 177];
+const startingTeam = [164, 365, 233, 75, 114, 327411, 397];
+const abandons = [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173];
 const LOCAL_STORAGE_KEY = 'selectedRiderTeam';
 const rolesMap = {
 	lib_rouleur: 'All rounder',
@@ -24,7 +23,7 @@ let currentTeamSprinters = 0;
 let currentTeamClimbers = 0;
 let currentTeamAllrounders = 0;
 let currentSelectedRiderIds = [];
-
+let copyTeamDestination = null;
 
 document.addEventListener('DOMContentLoaded', function () {
 	const riderFilterInput = document.getElementById('riderFilterInput');
@@ -77,7 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	let loadedTeamIds = loadSelectedRiders();
 	if (!Array.isArray(loadedTeamIds) || loadedTeamIds.length === 0) {
 		// console.log("No saved team found in localStorage, using starting team.");
-		currentSelectedRiderIds = [...startingTeam]; // Initialize with startingTeam
+		currentSelectedRiderIds = []; // Initialize with empty array
+		// currentSelectedRiderIds = [...startingTeam]; // Initialize with startingTeam
 	} else {
 		// console.log("Loaded team from localStorage:", loadedTeamIds);
 		currentSelectedRiderIds = loadedTeamIds; // Use loaded team
@@ -90,6 +90,101 @@ document.addEventListener('DOMContentLoaded', function () {
 	// });
 	updateSelectedRiders(currentSelectedRiderIds)
 
+
+	// EVENTS
+	// CLICK TO SELECT/DESELECT RIDERS
+	riderListTbody.addEventListener('click', (event) => {
+		const clickedRow = event.target.closest('tr');
+		if (clickedRow && clickedRow.id.startsWith('rider')) {
+			if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
+			else addSelected(clickedRow);
+		}
+	});
+
+	// TABLE HEADER CLICK TO TRIGGER COLUMN SORTS
+	document.querySelectorAll('table.sortable th').forEach((th) => {
+		th.addEventListener('click', (e) => {
+			sortTable(e.target);
+		});
+	});
+
+	// CLOSE INFO PANEL
+	document.getElementById('closeInfo').addEventListener('click', (e) => {
+		document.body.classList.add('hideInfo');
+	});
+
+	// TOGGLE INFO PANEL
+	document.getElementById('infoBtn').addEventListener('click', (e) => {
+		document.body.classList.toggle('hideInfo');
+	});
+
+	// TRIGGER FILTER ON RIDER LIST
+	riderFilterInput.addEventListener('input', filterTable);
+
+	// CLEAR FILTTER ON RIDER LIST
+	riderFilterClearBtn.addEventListener('click', () => {
+		riderFilterInput.value = ''; // Clear the input
+		filterTable(); // Re-apply filter to show all rows
+	});
+
+	// SELECT DIFFERENT RIDER SLOT
+	document.querySelectorAll('.slotWrapper button').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			changeActiveSlot(btn.dataset.team);
+		});
+	});
+
+	// MANAGE MODAL CLOSES (ICON)
+	document.querySelectorAll('.modalClose').forEach(el => {
+		el.addEventListener('click', function (e) {
+			el.closest('.modalOpen').classList.remove('modalOpen');
+		});
+	});
+
+	// MANAGE MODAL CLOSES (OUTSIDE AREA)
+	document.querySelectorAll('.modal').forEach(el => {
+		el.addEventListener('click', function (e) {
+			if (e.target.classList.contains('modalOpen')) {
+				e.target.classList.remove('modalOpen');
+			}
+		});
+	});
+
+	// COPY SLOT MODAL TRIGGER
+	document.getElementById('copySlot').addEventListener('click', (e) => {
+		document.getElementById('selectedTeamSlot').innerText = currentSlot;
+		document.getElementById('copyModal').classList.add('modalOpen');
+	});
+
+	document.querySelectorAll('.copyTeamDestination').forEach(el => {
+		el.addEventListener('click', function (e) {
+			copyTeamDestination = el.dataset.slot;
+			let currentlySelectedDestination = document.querySelector('.copyTeamDestination.active');
+			if (currentlySelectedDestination) currentlySelectedDestination.classList.remove('active');
+			el.classList.add('active');
+			document.getElementById('copyTeamExecute').disabled = false;
+		});
+	});
+
+	document.getElementById('copyTeamExecute').addEventListener('click', (e) => {
+		// duplicateTeam(destination);
+		let currentTeam = loadSelectedRiders();
+		currentSlot = copyTeamDestination;
+		if (copyTeamDestination == null) {
+			console.log('no destination slot selected');
+			return false;
+		}
+		saveSelectedRiders(currentTeam);
+		changeActiveSlot(copyTeamDestination);
+		document.getElementById('copyModal').classList.remove('modalOpen');
+		document.getElementById('copyCompleteModal').classList.add('modalOpen');
+		document.getElementById('copyResultMsg').innerText = `Your team has been copied to slot ${copyTeamDestination}`;
+		document.querySelector('.copyTeamDestination.active').classList.remove('active');
+		copyTeamDestination = null;
+	});
+
+
+	// FUNCTIONS
 	function updateSelectedRiders(currentSelectedRiderIds) {
 		currentTeamCost = 0;
 		currentTeamCount = 0;
@@ -108,12 +203,14 @@ document.addEventListener('DOMContentLoaded', function () {
 			header.textContent = plainText;
 			header.removeAttribute("data-sort-dir");
 		}
-		currentSelectedRiderIds.forEach(riderId => {
-			const row = document.getElementById(`rider${riderId}`);
-			if (row) {
-				addSelected(row, true); // This will add highlight, clone, update stats, and save to localStorage
-			}
-		});
+		if (currentSelectedRiderIds) {
+			currentSelectedRiderIds.forEach(riderId => {
+				const row = document.getElementById(`rider${riderId}`);
+				if (row) {
+					addSelected(row, true); // This will add highlight, clone, update stats, and save to localStorage
+				}
+			});
+		}
 		updateTeamStatsDisplay();
 	}
 
@@ -167,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		else if (rolesMap[rider.position] === 'Leader') currentTeamLeaders--;
 		updateTeamStatsDisplay();
 	}
+
 	function filterTable() {
 		const filterText = riderFilterInput.value.toLowerCase().trim();
 		const allRiderRows = riderListTbody.querySelectorAll('tr');
@@ -227,63 +325,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		else allrounderEl.classList.remove('error');
 	}
 
-	// CLICK EVENT TO SELECT/DESELECT RIDERS
-	riderListTbody.addEventListener('click', (event) => {
-		const clickedRow = event.target.closest('tr');
-		if (clickedRow && clickedRow.id.startsWith('rider')) {
-			if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
-			else addSelected(clickedRow);
-		}
-	});
+	function changeActiveSlot(slot) {
+		currentSlot = slot;
+		document.querySelector('.slotActive').classList.remove('slotActive');
+		document.getElementById('slot' + slot).classList.add('slotActive');
+		currentSelectedRiderIds = loadSelectedRiders();
+		updateSelectedRiders(currentSelectedRiderIds);
+	}
 
-	// TABLE HEADER CLICK EVENT TO TRIGGER COLUMN SORTS
-	document.querySelectorAll('table.sortable th').forEach((th) => {
-		th.addEventListener('click', (e) => {
-			sortTable(e.target);
-		});
-	});
+	// function duplicateTeam(destination) {
+	// 	let currentTeam = loadSelectedRiders();
+	// 	currentSlot = copyTeamDestination;
+	// 	saveSelectedRiders(currentTeam);
+	// 	changeActiveSlot(copyTeamDestination);
+	// }
 
-	document.getElementById('closeInfo').addEventListener('click', (e) => {
-		document.body.classList.add('hideInfo');
-	});
-
-	document.getElementById('infoBtn').addEventListener('click', (e) => {
-		document.body.classList.toggle('hideInfo');
-	});
-
-	riderFilterInput.addEventListener('input', filterTable);
-
-	riderFilterClearBtn.addEventListener('click', () => {
-		riderFilterInput.value = ''; // Clear the input
-		filterTable(); // Re-apply filter to show all rows
-	});
-
-	document.querySelectorAll('.slotWrapper button').forEach((btn) => {
-		btn.addEventListener('click', () => {
-			currentSlot = btn.dataset.team;
-			document.querySelector('.slotActive').classList.remove('slotActive');
-			btn.classList.add('slotActive');
-			currentSelectedRiderIds = loadSelectedRiders();
-			updateSelectedRiders(currentSelectedRiderIds)
-		});
-	});
-
-	// document.getElementById('#slot1').addEventListener('click', (e) => {
-	// 	currentSlot=1;
-	// 	loadSelectedRiders();
-	// });
-
-	// document.getElementById('#slot2').addEventListener('click', (e) => {
-	// 	currentSlot=2;
-	// 	loadSelectedRiders();
-	// });
-
-	// document.getElementById('#slot3').addEventListener('click', (e) => {
-	// 	currentSlot=3;
-	// 	loadSelectedRiders();
-	// });
-
-});
+}); // END OF DOMContentLoaded
 
 function saveSelectedRiders(riderIds) {
 	try {
@@ -300,10 +357,10 @@ function loadSelectedRiders() {
 			document.body.classList.add('hideInfo');
 			return JSON.parse(storedTeam);
 		}
-		else return null;
+		else return [];
 	} catch (e) {
 		console.error("Error loading from localStorage:", e);
-		return null;
+		return [];
 	}
 }
 
@@ -325,7 +382,7 @@ function sortTable(clickedHeader) {
 		header.removeAttribute("data-sort-dir");
 	}
 	const indicator = newDir === "asc" ? "▲" : "▼";
-	clickedHeader.innerHTML = clickedHeader.textContent + ` <span class="sort-indicator">${indicator}</span>`;
+	clickedHeader.innerHTML = clickedHeader.textContent + `<span class="sortIndicator">${indicator}</span>`;
 	clickedHeader.setAttribute("data-sort-dir", newDir);
 	rows.sort((a, b) => {
 		let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
