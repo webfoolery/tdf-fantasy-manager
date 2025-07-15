@@ -9,7 +9,7 @@
   --tdCellEvenTextColor: #fff;
   --trHighlightBgColor: #FEED01;
   --trHighlightTextColor: #000;
-  --statBgColor: #1fa000;
+  --statBgColor: #008000;
   --statTextColor: #ffffff;
   --leaderColor: #42a62a;
   --sprinterColor: #0094e1;
@@ -131,6 +131,10 @@ img.logo {
   cursor: pointer;
 }
 
+#noRidersSelected {
+  display:none;
+}
+
 .slotWrapper {
   display: flex;
   column-gap: 10px;
@@ -249,6 +253,11 @@ img.logo {
 
 body div .error {
   background: #ff0000;
+  color: #ffffff;
+}
+
+body div .success {
+  background: #008000;
   color: #ffffff;
 }
 
