@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const teamclimberEl = document.getElementById('teamClimbers');
 	const teamallrounderEl = document.getElementById('teamAllrounders');
 	const fragment = document.createDocumentFragment();
+	const copyResultMsg = document.getElementById('copyResultMsg');
 
 	data.joueurs.forEach((rider) => {
 		count++;
@@ -152,6 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// COPY SLOT MODAL TRIGGER
 	document.getElementById('copySlot').addEventListener('click', (e) => {
+		copyResultMsg.classList.remove('error', 'success');
+		copyResultMsg.innerHTML = '';
 		document.getElementById('selectedTeamSlot').innerText = currentSlot;
 		document.getElementById('copyModal').classList.add('modalOpen');
 	});
@@ -168,17 +171,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	document.getElementById('copyTeamExecute').addEventListener('click', (e) => {
 		// duplicateTeam(destination);
-		let currentTeam = loadSelectedRiders();
-		currentSlot = copyTeamDestination;
 		if (copyTeamDestination == null) {
-			console.log('no destination slot selected');
+			copyResultMsg.classList.add('error');
+			copyResultMsg.innerHTML = `<p>You must select a slot first<p>`;
 			return false;
 		}
+		let currentTeam = loadSelectedRiders();
+		currentSlot = copyTeamDestination;
 		saveSelectedRiders(currentTeam);
 		changeActiveSlot(copyTeamDestination);
-		document.getElementById('copyModal').classList.remove('modalOpen');
-		document.getElementById('copyCompleteModal').classList.add('modalOpen');
-		document.getElementById('copyResultMsg').innerText = `Your team has been copied to slot ${copyTeamDestination}`;
+		// document.getElementById('copyCompleteModal').classList.add('modalOpen');
+		document.getElementById('copyResultMsg').innerHTML = `<p>Your team has been copied to slot ${copyTeamDestination}<p>`;
+		// document.getElementById('copyModal').classList.remove('modalOpen');
 		document.querySelector('.copyTeamDestination.active').classList.remove('active');
 		copyTeamDestination = null;
 	});
@@ -396,5 +400,10 @@ function sortTable(clickedHeader) {
 			? valA.localeCompare(valB)
 			: valB.localeCompare(valA);
 	});
-	rows.forEach(row => tbody.appendChild(row));
+	currentSelectedRiderIds = [];
+	rows.forEach((row) => {
+		tbody.appendChild(row);
+		currentSelectedRiderIds.push(row.id.replace('selected', ''));
+	});
+	saveSelectedRiders(currentSelectedRiderIds);
 }

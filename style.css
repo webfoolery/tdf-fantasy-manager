@@ -179,11 +179,18 @@ img.logo {
   background-color: var(--allrounderColor);
   border-radius: 10px;
   cursor: pointer;
+  margin-bottom: 10px;;
 }
 
 #copyTeamExecute:disabled {
   background-color: rgb(197, 197, 197);
   cursor: not-allowed;
+}
+
+#copyResultMsg {
+  text-align: center;
+  padding:5px;
+  border-radius:5px;
 }
 
 .costCount,
@@ -240,7 +247,7 @@ img.logo {
   padding: 0;
 }
 
-.statsWrapper .error {
+body div .error {
   background: #ff0000;
   color: #ffffff;
 }
