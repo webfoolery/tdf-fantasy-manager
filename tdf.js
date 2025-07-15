@@ -248,14 +248,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function removeSelected(row) {
+		// console.log(row);
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
 		const rider = getObjectById(data.joueurs, riderId);
+		// console.log(rider);
 		if (!rider) {
 			console.warn(`Rider with ID ${riderId} not found in data.`);
 			return;
 		}
+
+console.group("Debugging removeSelected");
+console.log("Rider ID to remove (from row.id):", riderId, "Type:", typeof riderId);
+console.log("currentSelectedRiderIds BEFORE filter:", currentSelectedRiderIds);
+console.log("Types in currentSelectedRiderIds BEFORE filter:", currentSelectedRiderIds.map(item => typeof item));
+
 		// Remove from current selected IDs list and save to localStorage
 		currentSelectedRiderIds = currentSelectedRiderIds.filter(id => id !== riderId);
+console.log("currentSelectedRiderIds AFTER filter:", currentSelectedRiderIds);
+console.log("Types in currentSelectedRiderIds AFTER filter:", currentSelectedRiderIds.map(item => typeof item));
+console.groupEnd();
+
 		saveSelectedRiders(currentSelectedRiderIds);
 		row.classList.remove('highlight');
 		document.getElementById('selected' + riderId).remove();
@@ -347,6 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }); // END OF DOMContentLoaded
 
 function saveSelectedRiders(riderIds) {
+	console.log(riderIds);
 	try {
 		localStorage.setItem(LOCAL_STORAGE_KEY + currentSlot, JSON.stringify(riderIds));
 	} catch (e) {
@@ -400,10 +413,26 @@ function sortTable(clickedHeader) {
 			? valA.localeCompare(valB)
 			: valB.localeCompare(valA);
 	});
-	currentSelectedRiderIds = [];
-	rows.forEach((row) => {
-		tbody.appendChild(row);
-		currentSelectedRiderIds.push(row.id.replace('selected', ''));
-	});
-	saveSelectedRiders(currentSelectedRiderIds);
+	// currentSelectedRiderIds = [];
+	// rows.forEach((row) => {
+	// 	tbody.appendChild(row);
+	// 	currentSelectedRiderIds.push(parseInt(row.id.replace('selected', '')));
+	// });
+	// saveSelectedRiders(currentSelectedRiderIds);
+
+							rows.forEach(row => tbody.appendChild(row));
+							if (table.id === 'selectedRidersTable') {
+							const sortedSelectedRiderIds = rows.map(row => {
+							// Extract the numeric ID from the row's ID (e.g., "selected123" -> 123)
+							return parseInt(row.id.replace('selected', ''), 10);
+							});
+
+							// Update the global state array
+							currentSelectedRiderIds = sortedSelectedRiderIds;
+
+							// Save the updated, sorted array to localStorage
+							saveSelectedRiders(currentSelectedRiderIds);
+
+							console.log("Selected riders list sorted and saved:", currentSelectedRiderIds);
+							}
 }

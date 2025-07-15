@@ -370,6 +370,10 @@ tr.highlight td {
   background: var(--trHighlightBgColor);
 }
 
+td.riderCost, td.riderBib {
+  text-align: right;
+}
+
 .tableWrapper {
   display: flex;
   flex-flow: row wrap;
