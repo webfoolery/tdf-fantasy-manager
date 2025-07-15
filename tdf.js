@@ -372,7 +372,8 @@ function loadSelectedRiders() {
 		const storedTeam = localStorage.getItem(LOCAL_STORAGE_KEY + currentSlot);
 		if (storedTeam) {
 			document.body.classList.add('hideInfo');
-			return JSON.parse(storedTeam);
+			// return JSON.parse(storedTeam);
+			return JSON.parse(storedTeam).map(id => parseInt(id, 10));
 		}
 		else return [];
 	} catch (e) {
