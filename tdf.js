@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		Object.keys(cellsData).forEach(key => {
 			const td = document.createElement('td');
 			td.classList.add(key);
-			if (typeof cellsData[key] === 'string' && cellsData[key].includes('<img')) td.innerHTML = cellsData[key];
+			if (typeof cellsData[key] === 'string') td.innerHTML = cellsData[key];
 			else td.textContent = cellsData[key];
 			row.appendChild(td);
 		});
@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		const clonedRow = row.cloneNode(true);
 		clonedRow.classList.remove('highlight');
 		clonedRow.id = `selected${rider.id}`;
+		clonedRow.style.display = ''; // OTHERWISE WHEN FILTERED SOME ROWS WILL BE HIDDEN!
 		clonedRow.addEventListener("click", (event) => {
 			removeSelected(document.getElementById(clonedRow.id.replace('selected', 'rider')));
 		});
@@ -260,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	function filterTable() {
 		const filterText = riderFilterInput.value.toLowerCase().trim();
 		const allRiderRows = riderListTbody.querySelectorAll('tr');
-
 		allRiderRows.forEach(row => {
 			const riderName = row.querySelector('.riderName')?.textContent.toLowerCase() || '';
 			const riderRole = row.querySelector('.riderRole')?.textContent.toLowerCase() || '';
