@@ -16,6 +16,7 @@
   --climberColor: #ff7800;
   --allrounderColor: #ffba00;
   --abandonedColor: #ff0000;
+  --borderRadius: 10px;
 }
 
 html {
@@ -53,7 +54,7 @@ li {
   margin: 0 auto;
   width: fit-content;
   background: #FEED01;
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   padding: 5px 10px;
   color: #000000;
 }
@@ -71,7 +72,7 @@ img.logo {
 
 .infoWrapper {
   border: 1px solid #fff;
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   padding: 10px;
   margin-bottom: 10px;
 }
@@ -81,24 +82,29 @@ img.logo {
 }
 
 #infoBtn {
-  width: 50px;
+  /* width: 50px;
   height: 50px;
   line-height: 50px;
   position: absolute;
   top: 10px;
   right: 10px;
+  font-size: 3rem; */
   background-color: #fff;
   color: #000;
   cursor: pointer;
-  display: inline-block;
+  /* display: inline-block; */
   /* Or use flexbox for centering */
   text-align: center;
   /* For horizontal alignment */
-  font-size: 3rem;
   border-radius: 50%;
   font-family: 'Times New Roman', Times, serif;
   font-style: italic;
   font-weight: bolder;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 2.5rem;
+  flex: 0 0 34px;
 }
 
 .iLogo {
@@ -117,7 +123,7 @@ img.logo {
   font-size: 1.5rem;
 }
 
-.infoCopy {
+.infoCopyIcon, .infoAbandonIcon {
   height: 22px;
   vertical-align: middle;
 }
@@ -127,12 +133,12 @@ img.logo {
   background-color: var(--allrounderColor);
   font-size: 1.3rem;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: var(--borderRadius);
   cursor: pointer;
 }
 
 #noRidersSelected {
-  display:none;
+  display: none;
 }
 
 .slotWrapper {
@@ -145,7 +151,7 @@ img.logo {
 .slotWrapper>button {
   flex: 1 1 100%;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: var(--borderRadius);
 }
 
 .copyDestinationSelectWrapper {
@@ -153,7 +159,7 @@ img.logo {
   justify-content: center;
 }
 
-#copySlot img {
+#copySlot img, #removeRider img {
   max-height: 34px;
   cursor: pointer;
 }
@@ -167,7 +173,7 @@ img.logo {
   padding: 10px;
   cursor: pointer;
   border: 1px solid black;
-  border-radius: 5px;
+  border-radius: var(--borderRadius);
   margin: 0 10px 10px 0;
   text-align: center;
 }
@@ -181,9 +187,10 @@ img.logo {
   width: 100%;
   padding: 10px;
   background-color: var(--allrounderColor);
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   cursor: pointer;
-  margin-bottom: 10px;;
+  margin-bottom: 10px;
+  ;
 }
 
 #copyTeamExecute:disabled {
@@ -193,8 +200,8 @@ img.logo {
 
 #copyResultMsg {
   text-align: center;
-  padding:5px;
-  border-radius:5px;
+  padding: 5px;
+  border-radius: var(--borderRadius);
 }
 
 .costCount,
@@ -215,7 +222,7 @@ img.logo {
 .costCount>div {
   background: var(--statBgColor);
   color: var(--statTextColor);
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   flex: 1 1 100%;
   border: 2px solid #ffffff;
   padding: 10px 0;
@@ -224,7 +231,7 @@ img.logo {
 .roles>div {
   background: var(--statBgColor);
   color: var(--statTextColor);
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   border: 2px solid #ffffff;
   padding: 10px 0;
   flex: 1 1 calc(50% - 10px);
@@ -270,19 +277,34 @@ body div .success {
 }
 
 .filterWrapper {
-  text-align: center;
   margin-bottom: 10px;
-  max-width: 100%;
+  display: flex;
+  column-gap: 10px;
+}
+
+#abandonInfo {
+  display:none;
+  padding: 10px;
+  background-color: red;
+  color:white;
+  border-radius: var(--borderRadius);
+  margin-bottom: 10px;
+  cursor:pointer;
+}
+
+.manageAbandons #abandonInfo {
+  display:block;
 }
 
 .filterWrapper #riderFilterInput {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: var(--borderRadius);
   width: 100%;
 }
 
 .filter {
   position: relative;
+  flex: 1 1 100%;
 }
 
 #riderFilterClearBtn {
@@ -368,18 +390,19 @@ tr.abandoned .riderRole {
   border-left: 7px solid var(--abandonedColor);
 }
 
+tr.highlight td {
+  color: var(--trHighlightTextColor);
+  background: var(--trHighlightBgColor);
+}
+
 tr.abandoned td,
 .infoAbandon {
   text-decoration: line-through;
   color: #f00;
 }
 
-tr.highlight td {
-  color: var(--trHighlightTextColor);
-  background: var(--trHighlightBgColor);
-}
-
-td.riderCost, td.riderBib {
+td.riderCost,
+td.riderBib {
   text-align: right;
 }
 
@@ -456,7 +479,7 @@ table#selectedRidersTable td {
   width: max-content;
   max-width: 90%;
   color: black;
-  border-radius: 10px;
+  border-radius: var(--borderRadius);
   position: absolute;
   top: 50%;
   left: 50%;

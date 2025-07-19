@@ -3,9 +3,10 @@ TODO::
 add/remove rider to abandon list
 import/export local storage to different machine
 */
-const startingTeam = [164, 365, 233, 75, 114, 327411, 397];
-const abandons = [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173];
-const LOCAL_STORAGE_KEY = 'selectedRiderTeam';
+// const startingTeam = [164, 365, 233, 75, 114, 327411, 397];
+// const abandons = [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173, 18, 43, 147];
+const LOCAL_STORAGE_TEAM = 'selectedRiderTeam';
+const LOCAL_STORAGE_ABANDONS = 'abandons';
 const rolesMap = {
 	lib_rouleur: 'All rounder',
 	lib_grimpeur: 'Climber',
@@ -40,16 +41,23 @@ document.addEventListener('DOMContentLoaded', function () {
 	const teamallrounderEl = document.getElementById('teamAllrounders');
 	const fragment = document.createDocumentFragment();
 	const copyResultMsg = document.getElementById('copyResultMsg');
+	let abandonIds = loadAbandonedRiders();
+	let loadedTeamIds = loadSelectedRiders();
+	if (!Array.isArray(loadedTeamIds) || loadedTeamIds.length === 0) {
+		currentSelectedRiderIds = [];
+	} else {
+		currentSelectedRiderIds = loadedTeamIds;
+	}
 
 	data.joueurs.forEach((rider) => {
 		count++;
 		const row = document.createElement('tr');
 		row.id = `rider${rider.id}`;
 		row.classList.add(rider.position);
-		if (startingTeam.indexOf(rider.id) != -1) row.classList.add('highlight');
-		if (abandons.indexOf(rider.id) != -1) row.classList.add('abandoned');
+		// if (currentSelectedRiderIds.indexOf(rider.id) != -1) row.classList.add('highlight');
+		if (abandonIds.indexOf(rider.id) != -1) row.classList.add('abandoned');
 
-		// SOME WORDS ARE TOO LONG & AFFECT LAYOUT!
+		// FIX LONG WORDS THAT BREAK LAYOUT!
 		if (rider.club == 'TotalEnergies') rider.club = 'Total Energies';
 		if (rider.nomcomplet.includes('SINTMAARTENSDIJK')) rider.nomcomplet = rider.nomcomplet.replace('SINTMAARTENSDIJK', 'SINTMRTNSDJK');
 
@@ -73,29 +81,34 @@ document.addEventListener('DOMContentLoaded', function () {
 		fragment.appendChild(row);
 	});
 	riderListTbody.appendChild(fragment);
-	let loadedTeamIds = loadSelectedRiders();
-	if (!Array.isArray(loadedTeamIds) || loadedTeamIds.length === 0) {
-		currentSelectedRiderIds = []; // Initialize with empty array
-	} else {
-		currentSelectedRiderIds = loadedTeamIds; // Use loaded team
-	}
 	updateSelectedRiders(currentSelectedRiderIds)
 
 
-	// EVENTS
+
+
+	/*----------------------*/
+	/* ------ EVENTS ------ */
+	/*----------------------*/
+
 	// CLICK TO SELECT/DESELECT RIDERS
 	riderListTbody.addEventListener('click', (event) => {
 		const clickedRow = event.target.closest('tr');
-		if (clickedRow && clickedRow.id.startsWith('rider')) {
-			if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
-			else addSelected(clickedRow);
+		if (clickedRow) {
+			if (document.body.classList.contains('manageAbandons')) {
+				if (clickedRow.classList.contains('abandoned')) removeAbandon(clickedRow);
+				else addAbandon(clickedRow);
+			}
+			else {
+				if (clickedRow.classList.contains('highlight')) removeSelected(clickedRow);
+				else addSelected(clickedRow);
+			}
 		}
 	});
 
 	// TABLE HEADER CLICK TO TRIGGER COLUMN SORTS
 	document.querySelectorAll('table.sortable th').forEach((th) => {
 		th.addEventListener('click', (e) => {
-			sortTable(e.target);
+			sortTable(e.target.closest('th')); //  CLOSEST IN CASE THE SORT INDICATOR IS CLICKED
 		});
 	});
 
@@ -170,13 +183,27 @@ document.addEventListener('DOMContentLoaded', function () {
 		saveSelectedRiders(currentTeam);
 		changeActiveSlot(copyTeamDestination);
 		copyResultMsg.classList.add('success');
-		document.getElementById('copyResultMsg').innerHTML = `<p>Your team has been copied to slot ${copyTeamDestination}<p>`;
+		document.getElementById('copyResultMsg').innerHTML = `<p>Your team has been copied to slot ${copyTeamDestination}.<br>Click here to close this window.<p>`;
 		document.querySelector('.copyTeamDestination.active').classList.remove('active');
 		copyTeamDestination = null;
 	});
 
+	// MANAGE ABANDONED RIDER LIST
+	document.getElementById('removeRider').addEventListener('click', (e) => {
+		document.body.classList.toggle('manageAbandons');
+	});
 
-	// FUNCTIONS
+	document.getElementById('abandonInfo').addEventListener('click', (e) => {
+		document.body.classList.remove('manageAbandons');
+	});
+
+
+
+
+	/*-------------------------*/
+	/* ------ FUNCTIONS ------ */
+	/*-------------------------*/
+
 	function updateSelectedRiders(currentSelectedRiderIds) {
 		currentTeamCost = 0;
 		currentTeamCount = 0;
@@ -204,6 +231,50 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 		updateTeamStatsDisplay();
+	}
+
+	function addAbandon(row) {
+		const riderId = parseInt(row.id.replace('rider', ''), 10);
+		row.classList.add('abandoned');
+		selectedAbandonedRider = document.getElementById('selected'+riderId);
+		if (selectedAbandonedRider) selectedAbandonedRider.classList.add('abandoned');
+		abandonIds.push(riderId);
+		saveAbandonedRiders(abandonIds);
+	}
+
+	function removeAbandon(row) {
+		const riderId = parseInt(row.id.replace('rider', ''), 10);
+		row.classList.remove('abandoned');
+		selectedAbandonedRider = document.getElementById('selected'+riderId);
+		if (selectedAbandonedRider) selectedAbandonedRider.classList.remove('abandoned');
+		console.log(abandonIds);
+		abandonIds = abandonIds.filter(id => id !== riderId);
+		console.log(abandonIds);
+		saveAbandonedRiders(abandonIds);
+	}
+
+	function saveAbandonedRiders(riderIds) {
+		try {
+			localStorage.setItem(LOCAL_STORAGE_ABANDONS, JSON.stringify(riderIds));
+		} catch (e) {
+			console.error("Error saving abandons to localStorage:", e);
+		}
+	}
+
+	function loadAbandonedRiders() {
+		// return [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173, 18, 43, 147, 154, 233];
+		try {
+			const abandonIds = localStorage.getItem(LOCAL_STORAGE_ABANDONS);
+			if (abandonIds) {
+				return JSON.parse(abandonIds).map(id => parseInt(id, 10));
+			}
+			else {
+				return [];
+			}
+		} catch (e) {
+			console.error("Error loading abandons from localStorage:", e);
+			return [];
+		}
 	}
 
 	function addSelected(row, init = false) {
@@ -319,76 +390,91 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateSelectedRiders(currentSelectedRiderIds);
 	}
 
-}); // END OF DOMContentLoaded
-
-function saveSelectedRiders(riderIds) {
-	console.log(riderIds);
-	try {
-		localStorage.setItem(LOCAL_STORAGE_KEY + currentSlot, JSON.stringify(riderIds));
-	} catch (e) {
-		console.error("Error saving to localStorage:", e);
-	}
-}
-
-function loadSelectedRiders() {
-	try {
-		const storedTeam = localStorage.getItem(LOCAL_STORAGE_KEY + currentSlot);
-		if (storedTeam) {
-			document.body.classList.add('hideInfo');
-			return JSON.parse(storedTeam).map(id => parseInt(id, 10));
+	function saveSelectedRiders(riderIds) {
+		try {
+			localStorage.setItem(LOCAL_STORAGE_TEAM + currentSlot, JSON.stringify(riderIds));
+		} catch (e) {
+			console.error("Error saving to localStorage:", e);
 		}
-		else {
-			document.body.classList.remove('hideInfo');
+	}
+
+	function loadSelectedRiders() {
+		try {
+			const storedTeam = localStorage.getItem(LOCAL_STORAGE_TEAM + currentSlot);
+			if (storedTeam) {
+				document.body.classList.add('hideInfo');
+				return JSON.parse(storedTeam).map(id => parseInt(id, 10));
+			}
+			else {
+				document.body.classList.remove('hideInfo');
+				return [];
+			}
+		} catch (e) {
+			console.error("Error loading from localStorage:", e);
 			return [];
 		}
-	} catch (e) {
-		console.error("Error loading from localStorage:", e);
-		return [];
 	}
-}
 
-function getObjectById(arr, id) {
-	return arr.find(obj => obj.id === id);
-}
-
-function sortTable(clickedHeader) {
-	let columnIndex = clickedHeader.cellIndex;
-	const table = clickedHeader.closest('table');
-	const thead = table.tHead;
-	const tbody = table.tBodies[0];
-	const rows = Array.from(tbody.rows);
-	const currentDir = clickedHeader.getAttribute("data-sort-dir") || "desc";
-	const newDir = currentDir === "desc" ? "asc" : "desc";
-	for (const header of thead.rows[0].cells) {
-		const plainText = header.textContent.replace(/[\u25B2\u25BC]/g, "").trim();
-		header.textContent = plainText;
-		header.removeAttribute("data-sort-dir");
-	}
-	const indicator = newDir === "asc" ? "▲" : "▼";
-	clickedHeader.innerHTML = clickedHeader.textContent + `<span class="sortIndicator">${indicator}</span>`;
-	clickedHeader.setAttribute("data-sort-dir", newDir);
-	rows.sort((a, b) => {
-		let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
-		let valB = b.cells[columnIndex].textContent.trim().toLowerCase();
-		if (!isNaN(valA) && !isNaN(valB)) {
-			valA = parseFloat(valA);
-			valB = parseFloat(valB);
-			return newDir === "asc" ? valA - valB : valB - valA;
+	function loadSelectedRiders() {
+		try {
+			const storedTeam = localStorage.getItem(LOCAL_STORAGE_TEAM + currentSlot);
+			if (storedTeam) {
+				document.body.classList.add('hideInfo');
+				return JSON.parse(storedTeam).map(id => parseInt(id, 10));
+			}
+			else {
+				document.body.classList.remove('hideInfo');
+				return [];
+			}
+		} catch (e) {
+			console.error("Error loading from localStorage:", e);
+			return [];
 		}
-		return newDir === "asc"
-			? valA.localeCompare(valB)
-			: valB.localeCompare(valA);
-	});
-	rows.forEach(row => tbody.appendChild(row));
-	if (table.id === 'selectedRidersTable') {
-		const sortedSelectedRiderIds = rows.map(row => {
-			// Extract the numeric ID from the row's ID (e.g., "selected123" -> 123)
-			return parseInt(row.id.replace('selected', ''), 10);
-		});
-		// Update the global state array
-		currentSelectedRiderIds = sortedSelectedRiderIds;
-		// Save the updated, sorted array to localStorage
-		saveSelectedRiders(currentSelectedRiderIds);
-		console.log("Selected riders list sorted and saved:", currentSelectedRiderIds);
 	}
-}
+
+	function getObjectById(arr, id) {
+		return arr.find(obj => obj.id === id);
+	}
+
+	function sortTable(clickedHeader) {
+		let columnIndex = clickedHeader.cellIndex;
+		const table = clickedHeader.closest('table');
+		const thead = table.tHead;
+		const tbody = table.tBodies[0];
+		const rows = Array.from(tbody.rows);
+		const currentDir = clickedHeader.getAttribute("data-sort-dir") || "desc";
+		const newDir = currentDir === "desc" ? "asc" : "desc";
+		for (const header of thead.rows[0].cells) {
+			const plainText = header.textContent.replace(/[\u25B2\u25BC]/g, "").trim();
+			header.textContent = plainText;
+			header.removeAttribute("data-sort-dir");
+		}
+		const indicator = newDir === "asc" ? "▲" : "▼";
+		clickedHeader.innerHTML = clickedHeader.textContent + `<span class="sortIndicator">${indicator}</span>`;
+		clickedHeader.setAttribute("data-sort-dir", newDir);
+		rows.sort((a, b) => {
+			let valA = a.cells[columnIndex].textContent.trim().toLowerCase();
+			let valB = b.cells[columnIndex].textContent.trim().toLowerCase();
+			if (!isNaN(valA) && !isNaN(valB)) {
+				valA = parseFloat(valA);
+				valB = parseFloat(valB);
+				return newDir === "asc" ? valA - valB : valB - valA;
+			}
+			return newDir === "asc"
+				? valA.localeCompare(valB)
+				: valB.localeCompare(valA);
+		});
+		rows.forEach(row => tbody.appendChild(row));
+		if (table.id === 'selectedRidersTable') {
+			const sortedSelectedRiderIds = rows.map(row => {
+				// Extract the numeric ID from the row's ID (e.g., "selected123" -> 123)
+				return parseInt(row.id.replace('selected', ''), 10);
+			});
+			// Update the global state array
+			currentSelectedRiderIds = sortedSelectedRiderIds;
+			// Save the updated, sorted array to localStorage
+			saveSelectedRiders(currentSelectedRiderIds);
+		}
+	}
+
+}); // END OF DOMContentLoaded

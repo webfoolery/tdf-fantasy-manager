@@ -13,8 +13,7 @@
 </head>
 
 <body class="hideInfo">
-  <span id="infoBtn">i</span>
-  <!-- <img src="images/icon-info.svg" alt="Info" id="infoBtn"> -->
+  <!-- <span id="infoBtn">i</span> -->
   <div class="header">
     <div class="logoWrapper">
       <div>
@@ -28,9 +27,10 @@
       Click on a rider name on either table to add/remove them from your selection.<br />
       Click a column heading on either table to sort by that column (sort order is saved).<br />
       Your rider selection is stored in your web browser &amp; will reload next time you visit the page.<br />
-      Riders who have abandoned are in red with a line through their name <span class="infoAbandon">like this</span>.<br />
       You can configure 3 different teams.<br />
-      You can duplicate a team to another slot by clicking the <img src="images/icon-copy-50px.png" alt="Copy team slot" class="infoCopy"> icon. Any existing team in that slot will be overwritten.<br />
+      You can duplicate a team to another slot by clicking the <img src="images/icon-copy-2-50px.png" alt="Copy team slot" class="infoCopyIcon"> icon. Any existing team in that slot will be overwritten.<br />
+      Riders who have abandoned are in red with a line through their name <span class="infoAbandon">like this</span>.<br />
+      You can mark/unmark riders as having withdrawn from the race by clicking the <img src="images/icon-remove-1-50px.png" class="infoAbandonIcon" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"> icon.<br />
     </p>
     <p>You can save any team here &amp; break all the rules, but below are the guidelines for the Fantasy TDF game. If these rules are broken it will show in the summary boxes underneath your team selection:</p>
     <ul>
@@ -42,7 +42,7 @@
       <li>Max 5 all rounders</li>
     </ul>
     <button type="button" id="closeInfo">Close this info panel</button>
-    <p>You can show this info panel at any time by clicking on the <span class="iLogo">i</span> icon at the top of the page.</p>
+    <p>You can show this info panel at any time by clicking on the <span class="iLogo">i</span> icon below.</p>
   </div>
   <div class="tableWrapper">
     <div class="selectedRidersWrapper">
@@ -51,7 +51,9 @@
         <button id="slot1" type="button" data-team="1" class="slotActive">Team 1</button>
         <button id="slot2" type="button" data-team="2">Team 2</button>
         <button id="slot3" type="button" data-team="3">Team 3</button>
-        <span id="copySlot"><img src="images/icon-copy-50px.png" alt="Copy team slot" title="Copy a team from one slot to another"></span>
+        <span id="copySlot"><img src="images/icon-copy-2-50px.png" alt="Copy team slot" title="Copy a team from one slot to another"></span>
+        <!-- <span id="removeRider"><img src="images/icon-remove-1-50px.png" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"></span> -->
+        <div id="infoBtn" title="Show the info panel">i</div>
       </div>
       <p id="noRidersSelected"><b>You have no selected riders in this team yet.</b><br />When you select them from the rider list they will appear here.</p>
       <table id="selectedRidersTable" class="sortable">
@@ -109,6 +111,14 @@
             </svg>
           </button>
         </div>
+        <span id="removeRider"><img src="images/icon-remove-1-50px.png" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"></span>
+      </div>
+      <div id="abandonInfo">
+        <h3>Rider abandons</h3>
+        <p>Click on any of the rider rows below to mark/unmark them as abandoned.<br>
+        Your selection is saved in the browser storage.<br>
+        You can use the filter above if needed.<br>
+        Click this box or the <img src="images/icon-remove-1-50px.png" class="infoAbandonIcon" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"> icon to return to normal mode.</p>
       </div>
       <table id="riderListTable" class="sortable">
         <thead>
@@ -138,15 +148,9 @@
         <div class="copyTeamDestination" data-slot="3">To team 3</div>
       </div>
       <button type="button" id="copyTeamExecute" disabled>Copy</button>
-      <div id="copyResultMsg"></div>
+      <div class="modalClose" id="copyResultMsg"></div>
     </div>
   </div>
-  <!-- <div id="copyCompleteModal" class="modal">
-    <div class="modal-content">
-      <span class="modalClose modalCloseIcon">&times;</span>
-      <h3 id="copyResultMsg"></h3>
-    </div>
-  </div> -->
 </body>
 
 </html>
