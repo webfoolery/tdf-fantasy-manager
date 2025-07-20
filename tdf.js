@@ -1,10 +1,9 @@
 /*
 TODO::
-add/remove rider to abandon list
 import/export local storage to different machine
 */
-// const startingTeam = [164, 365, 233, 75, 114, 327411, 397];
-// const abandons = [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173, 18, 43, 147];
+
+document.addEventListener('DOMContentLoaded', function () {
 const LOCAL_STORAGE_TEAM = 'selectedRiderTeam';
 const LOCAL_STORAGE_ABANDONS = 'abandons';
 const rolesMap = {
@@ -24,12 +23,11 @@ let currentTeamClimbers = 0;
 let currentTeamAllrounders = 0;
 let currentSelectedRiderIds = [];
 let copyTeamDestination = null;
-
-document.addEventListener('DOMContentLoaded', function () {
 	const riderFilterInput = document.getElementById('riderFilterInput');
 	const riderFilterClearBtn = document.getElementById('riderFilterClearBtn');
 	const riderListTable = document.getElementById('riderListTable');
 	const riderListTbody = document.querySelector('#riderListTable tbody');
+	const infoWrapper = document.querySelector('.infoWrapper');
 	const selectedRidersTable = document.getElementById('selectedRidersTable');
 	const selectedRidersTbody = document.querySelector('#selectedRidersTable tbody');
 	const noRidersEl = document.getElementById('noRidersSelected');
@@ -48,13 +46,16 @@ document.addEventListener('DOMContentLoaded', function () {
 	} else {
 		currentSelectedRiderIds = loadedTeamIds;
 	}
+	if (localStorage.getItem('returnVisit') != 'true') {
+		document.body.classList.remove('hideInfo');
+		localStorage.setItem('returnVisit', 'true');
+	}
 
 	data.joueurs.forEach((rider) => {
 		count++;
 		const row = document.createElement('tr');
 		row.id = `rider${rider.id}`;
 		row.classList.add(rider.position);
-		// if (currentSelectedRiderIds.indexOf(rider.id) != -1) row.classList.add('highlight');
 		if (abandonIds.indexOf(rider.id) != -1) row.classList.add('abandoned');
 
 		// FIX LONG WORDS THAT BREAK LAYOUT!
@@ -62,8 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		if (rider.nomcomplet.includes('SINTMAARTENSDIJK')) rider.nomcomplet = rider.nomcomplet.replace('SINTMAARTENSDIJK', 'SINTMRTNSDJK');
 
 		const cellsData = {
-			// count: count,
-			// id: rider.id,
 			riderName: rider.nomcomplet,
 			riderRole: rolesMap[rider.position],
 			team: `<img src="images/teams/${rider.imageclub}" width="20px" alt="${rider.club}" title="ID ${rider.id}"> ${rider.club}`,
@@ -120,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// TOGGLE INFO PANEL
 	document.getElementById('infoBtn').addEventListener('click', (e) => {
 		document.body.classList.toggle('hideInfo');
+		infoWrapper.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 	});
 
 	// TRIGGER FILTER ON RIDER LIST
@@ -247,9 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		row.classList.remove('abandoned');
 		selectedAbandonedRider = document.getElementById('selected'+riderId);
 		if (selectedAbandonedRider) selectedAbandonedRider.classList.remove('abandoned');
-		console.log(abandonIds);
 		abandonIds = abandonIds.filter(id => id !== riderId);
-		console.log(abandonIds);
 		saveAbandonedRiders(abandonIds);
 	}
 
@@ -262,7 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function loadAbandonedRiders() {
-		// return [264, 352, 14, 98, 328, 387, 177, 390, 206, 260, 80, 173, 18, 43, 147, 154, 233];
 		try {
 			const abandonIds = localStorage.getItem(LOCAL_STORAGE_ABANDONS);
 			if (abandonIds) {
@@ -402,28 +399,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		try {
 			const storedTeam = localStorage.getItem(LOCAL_STORAGE_TEAM + currentSlot);
 			if (storedTeam) {
-				document.body.classList.add('hideInfo');
 				return JSON.parse(storedTeam).map(id => parseInt(id, 10));
 			}
 			else {
-				document.body.classList.remove('hideInfo');
-				return [];
-			}
-		} catch (e) {
-			console.error("Error loading from localStorage:", e);
-			return [];
-		}
-	}
-
-	function loadSelectedRiders() {
-		try {
-			const storedTeam = localStorage.getItem(LOCAL_STORAGE_TEAM + currentSlot);
-			if (storedTeam) {
-				document.body.classList.add('hideInfo');
-				return JSON.parse(storedTeam).map(id => parseInt(id, 10));
-			}
-			else {
-				document.body.classList.remove('hideInfo');
 				return [];
 			}
 		} catch (e) {

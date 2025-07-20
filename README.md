@@ -25,3 +25,6 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 ### 2025-07-19 
 * adds functionality to mark/unmark riders who have abandoned the race
 * code cleanup & style tweaks
+
+### 2025-07-20 
+* improvements to info panel
