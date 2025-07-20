@@ -237,6 +237,10 @@ img.logo {
   flex: 1 1 calc(50% - 10px);
 }
 
+.statsWrapper {
+  text-shadow: 1px 1px 1px #000;
+}
+
 .statsWrapper .statLeaders {
   background: var(--leaderColor);
 }
@@ -499,6 +503,10 @@ table#selectedRidersTable td {
   font-weight: bold;
   text-decoration: none;
   font-size: 28px;
+  cursor: pointer;
+}
+
+.modalClose {
   cursor: pointer;
 }
 

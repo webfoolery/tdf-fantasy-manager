@@ -4,25 +4,25 @@ import/export local storage to different machine
 */
 
 document.addEventListener('DOMContentLoaded', function () {
-const LOCAL_STORAGE_TEAM = 'selectedRiderTeam';
-const LOCAL_STORAGE_ABANDONS = 'abandons';
-const rolesMap = {
-	lib_rouleur: 'All rounder',
-	lib_grimpeur: 'Climber',
-	lib_baroudeur: 'Sprinter',
-	lib_leader: 'Leader',
-	abandoned: 'Abandoned',
-};
-let count = 0;
-let currentSlot = 1;
-let currentTeamCost = 0;
-let currentTeamCount = 0;
-let currentTeamLeaders = 0;
-let currentTeamSprinters = 0;
-let currentTeamClimbers = 0;
-let currentTeamAllrounders = 0;
-let currentSelectedRiderIds = [];
-let copyTeamDestination = null;
+	const LOCAL_STORAGE_TEAM = 'selectedRiderTeam';
+	const LOCAL_STORAGE_ABANDONS = 'abandons';
+	const rolesMap = {
+		lib_rouleur: 'All rounder',
+		lib_grimpeur: 'Climber',
+		lib_baroudeur: 'Sprinter',
+		lib_leader: 'Leader',
+		abandoned: 'Abandoned',
+	};
+	let count = 0;
+	let currentSlot = 1;
+	let currentTeamCost = 0;
+	let currentTeamCount = 0;
+	let currentTeamLeaders = 0;
+	let currentTeamSprinters = 0;
+	let currentTeamClimbers = 0;
+	let currentTeamAllrounders = 0;
+	let currentSelectedRiderIds = [];
+	let copyTeamDestination = null;
 	const riderFilterInput = document.getElementById('riderFilterInput');
 	const riderFilterClearBtn = document.getElementById('riderFilterClearBtn');
 	const riderListTable = document.getElementById('riderListTable');
@@ -236,7 +236,7 @@ let copyTeamDestination = null;
 	function addAbandon(row) {
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
 		row.classList.add('abandoned');
-		selectedAbandonedRider = document.getElementById('selected'+riderId);
+		selectedAbandonedRider = document.getElementById('selected' + riderId);
 		if (selectedAbandonedRider) selectedAbandonedRider.classList.add('abandoned');
 		abandonIds.push(riderId);
 		saveAbandonedRiders(abandonIds);
@@ -245,7 +245,7 @@ let copyTeamDestination = null;
 	function removeAbandon(row) {
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
 		row.classList.remove('abandoned');
-		selectedAbandonedRider = document.getElementById('selected'+riderId);
+		selectedAbandonedRider = document.getElementById('selected' + riderId);
 		if (selectedAbandonedRider) selectedAbandonedRider.classList.remove('abandoned');
 		abandonIds = abandonIds.filter(id => id !== riderId);
 		saveAbandonedRiders(abandonIds);

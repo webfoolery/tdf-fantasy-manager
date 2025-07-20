@@ -28,3 +28,4 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 
 ### 2025-07-20 
 * improvements to info panel
+* style tweaks
