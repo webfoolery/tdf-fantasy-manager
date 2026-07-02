@@ -4,8 +4,10 @@ import/export local storage to different machine
 */
 
 document.addEventListener('DOMContentLoaded', function () {
-	const LOCAL_STORAGE_TEAM = 'selectedRiderTeam';
-	const LOCAL_STORAGE_ABANDONS = 'abandons';
+	const storageYear = getStorageYear();
+	const LOCAL_STORAGE_TEAM = `selectedRiderTeam${storageYear}_`;
+	const LOCAL_STORAGE_ABANDONS = `abandons${storageYear}`;
+	const LOCAL_STORAGE_RETURN_VISIT = `returnVisit${storageYear}`;
 	const rolesMap = {
 		lib_rouleur: 'All rounder',
 		lib_grimpeur: 'Climber',
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		lib_leader: 'Leader',
 		abandoned: 'Abandoned',
 	};
+	const maxCredits = 120;
 	let count = 0;
 	let currentSlot = 1;
 	let currentTeamCost = 0;
@@ -46,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	} else {
 		currentSelectedRiderIds = loadedTeamIds;
 	}
-	if (localStorage.getItem('returnVisit') != 'true') {
+	if (localStorage.getItem(LOCAL_STORAGE_RETURN_VISIT) != 'true') {
 		document.body.classList.remove('hideInfo');
-		localStorage.setItem('returnVisit', 'true');
+		localStorage.setItem(LOCAL_STORAGE_RETURN_VISIT, 'true');
 	}
 
 	data.joueurs.forEach((rider) => {
@@ -197,6 +200,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.body.classList.remove('manageAbandons');
 	});
 
+	// CLEAR SAVED TEAM AND ABANDONED RIDER DATA
+	document.getElementById('resetStorage').addEventListener('click', () => {
+		if (window.confirm('Are you sure you want to clear all saved team data/selections?')) {
+			resetSavedData();
+		}
+	});
+
 
 
 
@@ -211,9 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		currentTeamSprinters = 0;
 		currentTeamClimbers = 0;
 		currentTeamAllrounders = 0;
-		selectedRidersTbody.querySelectorAll('table#selectedRidersTable tbody tr').forEach((tr) => {
-			tr.remove();
-		});
+		selectedRidersTbody.replaceChildren();
 		riderListTbody.querySelectorAll('tr.highlight').forEach((tr) => {
 			tr.classList.remove('highlight');
 		});
@@ -236,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function addAbandon(row) {
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
 		row.classList.add('abandoned');
-		selectedAbandonedRider = document.getElementById('selected' + riderId);
+		let selectedAbandonedRider = document.getElementById('selected' + riderId);
 		if (selectedAbandonedRider) selectedAbandonedRider.classList.add('abandoned');
 		abandonIds.push(riderId);
 		saveAbandonedRiders(abandonIds);
@@ -245,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function removeAbandon(row) {
 		const riderId = parseInt(row.id.replace('rider', ''), 10);
 		row.classList.remove('abandoned');
-		selectedAbandonedRider = document.getElementById('selected' + riderId);
+		let selectedAbandonedRider = document.getElementById('selected' + riderId);
 		if (selectedAbandonedRider) selectedAbandonedRider.classList.remove('abandoned');
 		abandonIds = abandonIds.filter(id => id !== riderId);
 		saveAbandonedRiders(abandonIds);
@@ -352,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		teamclimberEl.innerText = currentTeamClimbers;
 		teamallrounderEl.innerText = currentTeamAllrounders;
 		if (currentTeamCount > 0) {
-			noRidersEl.style.display = '';
+			noRidersEl.style.display = 'none';
 			selectedRidersTable.style.display = 'table';
 		}
 		else {
@@ -365,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		let sprinterEl = teamsprinterEl.closest('div');
 		let climberEl = teamclimberEl.closest('div');
 		let allrounderEl = teamallrounderEl.closest('div');
-		if (currentTeamCost > 120) costEl.classList.add('error');
+		if (currentTeamCost > maxCredits) costEl.classList.add('error');
 		else costEl.classList.remove('error');
 		if (currentTeamCount != 8) countEl.classList.add('error');
 		else countEl.classList.remove('error');
@@ -408,6 +416,27 @@ document.addEventListener('DOMContentLoaded', function () {
 			console.error("Error loading from localStorage:", e);
 			return [];
 		}
+	}
+
+	function resetSavedData() {
+		for (let slot = 1; slot <= 3; slot++) {
+			localStorage.removeItem(LOCAL_STORAGE_TEAM + slot);
+		}
+		localStorage.removeItem(LOCAL_STORAGE_ABANDONS);
+		localStorage.removeItem(LOCAL_STORAGE_RETURN_VISIT);
+		abandonIds = [];
+		currentSelectedRiderIds = [];
+		document.body.classList.remove('manageAbandons');
+		riderListTbody.querySelectorAll('tr.abandoned').forEach((tr) => {
+			tr.classList.remove('abandoned');
+		});
+		updateSelectedRiders(currentSelectedRiderIds);
+	}
+
+	function getStorageYear() {
+		const firstStageDate = data.joueurs.find(rider => rider.date_match)?.date_match;
+		const yearFromData = firstStageDate ? new Date(firstStageDate).getFullYear() : NaN;
+		return Number.isNaN(yearFromData) ? new Date().getFullYear() : yearFromData;
 	}
 
 	function getObjectById(arr, id) {

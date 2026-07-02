@@ -66,11 +66,13 @@
       <p id="noRidersSelected"><b>You have no selected riders in this team yet.</b><br />When you select them from the rider list they will appear here.</p>
       <table id="selectedRidersTable" class="sortable">
         <thead>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Club</th>
-          <th>Bib</th>
-          <th>Price</th>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Club</th>
+            <th>Bib</th>
+            <th>Price</th>
+          </tr>
         </thead>
         <tbody>
         </tbody>
@@ -88,24 +90,26 @@
         </div>
         <div class="roles">
           <div class="statLeaders">
-            <h4>Leaders: <span id="teamLeaders">0</h4>
+            <h4>Leaders: <span id="teamLeaders">0</span></h4>
             <p class="errorMessage">Max 3 leaders</p>
           </div>
           <div class="statSprinters">
-            <h4>Sprinters: <span id="teamSprinters">0</h4>
+            <h4>Sprinters: <span id="teamSprinters">0</span></h4>
             <p class="errorMessage">Max 3 sprinters</p>
           </div>
           <div class="statClimbers">
-            <h4>Climbers: <span id="teamClimbers">0</h4>
+            <h4>Climbers: <span id="teamClimbers">0</span></h4>
             <p class="errorMessage">Max 3 climbers</p>
           </div>
           <div class="statAllrounders">
-            <h4>All rounders: <span id="teamAllrounders">0</h4>
+            <h4>All rounders: <span id="teamAllrounders">0</span></h4>
             <p class="errorMessage">Max 5 all rounders</p>
           </div>
         </div>
       </div>
+      <button id="resetStorage" type="button">Reset saved data</button>
     </div>
+
     <div class="riderListWrapper">
       <h3 class="tableHeading">Add riders by clicking below</h3>
       <div class="filterWrapper">
@@ -124,7 +128,7 @@
         <p>Click on any of the rider rows below to mark/unmark them as abandoned.<br>
           Your selection is saved in the browser storage.<br>
           You can use the filter above if needed.</p>
-        <p></p>Click this box or the <img src="images/icon-remove-1-50px.png" class="infoIcon" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"> icon to return to normal team management mode.</p>
+        <p>Click this box or the <img src="images/icon-remove-1-50px.png" class="infoIcon" alt="Mark rider as withdrawn" title="Mark rider/s as withdrawn"> icon to return to normal team management mode.</p>
       </div>
       <table id="riderListTable" class="sortable">
         <thead>

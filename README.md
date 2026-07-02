@@ -22,10 +22,16 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 
 ## Changelog
 
-### 2025-07-19 
-* adds functionality to mark/unmark riders who have abandoned the race
-* code cleanup & style tweaks
+### 2026-07-02 
+* updated with 2026 data
+* added a reset button to clear saved teams and abandoned rider selections
+* changed browser storage keys to include the current race year
+* fixed selected team table refresh and empty team message display
 
 ### 2025-07-20 
 * improvements to info panel
 * style tweaks
+
+### 2025-07-19 
+* adds functionality to mark/unmark riders who have abandoned the race
+* code cleanup & style tweaks
