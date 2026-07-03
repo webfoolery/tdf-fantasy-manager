@@ -22,6 +22,11 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 
 ## Changelog
 
+### 2026-07-03
+* updates rider data
+* adds script for fetching & creating cleaner smaller rider data file
+* text additions to info panel regarding the reset button
+
 ### 2026-07-02 
 * updated with 2026 data
 * added a reset button to clear saved teams and abandoned rider selections
