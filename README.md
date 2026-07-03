@@ -25,6 +25,7 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 ### 2026-07-03
 * updates rider data
 * adds script for fetching & creating cleaner smaller rider data file
+* adds script for downloading jersey image files
 * text additions to info panel regarding the reset button
 
 ### 2026-07-02 
