@@ -10,7 +10,7 @@ async function downloadTdfRidersClean(pageSize = 200) {
       "accept": "application/json",
       "content-type": "application/json",
       "authorization": "Token ------------INSERT TOKEN HERE---------------",
-      "x-access-key": "630@19.30@"
+      "x-access-key": "------------INSERT ACCESS KEY HERE---------------"
     },
     body: JSON.stringify({
       filters: {
@@ -23,7 +23,7 @@ async function downloadTdfRidersClean(pageSize = 200) {
         partant: false,
         dreamteam: false,
         quota: "",
-        idj: "1",
+        idj: "------------INSERT IDJ HERE---------------",
         pageIndex: 0,
         pageSize,
         loadSelect: 0,

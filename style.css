@@ -456,6 +456,10 @@ table#selectedRidersTable td {
   padding: 8px 4px;
 }
 
+th.riderBib, th.riderPrice {
+  text-align: right;
+}
+
 .tableWrapper table {
   width: 100%;
 }

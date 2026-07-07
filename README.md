@@ -22,6 +22,11 @@ You can show this info panel at any time by clicking on the 'i' icon at the top 
 
 ## Changelog
 
+### 2026-07-07
+* updates rider data
+* tweaks to rider tables for better heading alignment
+* updates `fetch-rider-data.js` to highlight dynamic fields
+
 ### 2026-07-03
 * updates rider data
 * adds script for fetching & creating cleaner smaller rider data file
